@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor_app/feature/authentication/forgot_password.dart';
 import 'package:lettutor_app/feature/authentication/register_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -117,11 +118,15 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  color: Color(0xFF286AD2),
-                  fontWeight: FontWeight.w500,
+              GestureDetector(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ForgotPasswordPage())),
+                child: const Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                    color: Color(0xFF286AD2),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               const SizedBox(

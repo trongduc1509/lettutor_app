@@ -122,16 +122,6 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  color: Color(0xFF286AD2),
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
               Center(
                 child: TextButton(
                   child: const Padding(
