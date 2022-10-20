@@ -1,17 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/feature/authentication/register_page.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
         centerTitle: true,
+        leading: IconButton(
+            onPressed: Navigator.of(context).pop,
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.blue,
+            )),
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Image.asset(
@@ -132,7 +137,7 @@ class LoginPage extends StatelessWidget {
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Text(
-                      'LOG IN',
+                      'SIGN UP',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -186,15 +191,12 @@ class LoginPage extends StatelessWidget {
               Center(
                 child: RichText(
                   text: TextSpan(
-                    text: 'Not a member yet? ',
+                    text: 'Already have an account? ',
                     children: [
                       TextSpan(
-                        text: 'Sign up',
+                        text: 'Log in',
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const RegisterPage(),
-                              )),
+                          ..onTap = () => Navigator.of(context).pop(),
                         style: const TextStyle(
                           color: Colors.blue,
                           fontSize: 18.0,
