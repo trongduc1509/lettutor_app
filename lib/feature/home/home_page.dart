@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/courses/courses_list.dart';
+import 'package:lettutor_app/feature/profile/profile_page.dart';
 
 final GlobalKey<ScaffoldState> keyDrawerHomePage = GlobalKey();
 
@@ -12,15 +13,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
+  late TabController _tabController;
   late int _currentIndex;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    _currentIndex = 3;
+    _tabController = TabController(length: 5, vsync: this);
+    _tabController.index = 4;
+    _currentIndex = 4;
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,22 +53,26 @@ class _HomePageState extends State<HomePage>
         ]),
       ),
       body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: const [
           CoursesList(),
           CoursesList(),
           CoursesList(),
           CoursesList(),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.black,
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (_index) {
             setState(() {
               _currentIndex = _index;
             });
+            _tabController.animateTo(_currentIndex);
           },
           items: const [
             BottomNavigationBarItem(
@@ -79,6 +90,10 @@ class _HomePageState extends State<HomePage>
             BottomNavigationBarItem(
               icon: Icon(Icons.book),
               label: 'Courses',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ]),
     );
