@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../feature/profile/widgets/check_bottom_sheet.dart';
+import '../../shared/widgets/check_bottom_sheet.dart';
 
 Notifier _notifier = Notifier._();
 

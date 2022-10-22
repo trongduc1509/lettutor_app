@@ -30,7 +30,8 @@ class DatePickerView extends StatelessWidget {
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20))),
                 context: context,
-                builder: (context) => buildSheetTime(context, time: date!));
+                builder: (context) =>
+                    buildSheetTime(context, time: date ?? DateTime.now()));
             if (chosenDate != null) {
               if (isTo) {
                 chosenDate = chosenDate
@@ -61,7 +62,9 @@ class DatePickerView extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        convertDateFrom(date ?? DateTime.now(), "dd/MM/yyyy"),
+                        date != null
+                            ? convertDateFrom(date!, "dd/MM/yyyy")
+                            : 'Select a day',
                         style: DefaultStyle()
                             .t16Medium
                             .apply(color: DefaultStyle().blackTitle),

@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lettutor_app/base/extension/string.dart';
 
-import '../../../base/define/style/default_style.dart';
-import '../../../base/theme/colors.dart';
-import '../../../shared/widgets/common_txt.dart';
+import '../../base/define/style/default_style.dart';
+import '../../base/theme/colors.dart';
+import 'common_txt.dart';
 
 class CheckBottomSheet extends StatefulWidget {
   const CheckBottomSheet(

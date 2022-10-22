@@ -13,7 +13,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _controllerUnitTxt = TextEditingController();
+  final TextEditingController _countryController = TextEditingController();
   final List<String> countryList = [
     'Việt Nam',
     'Hoa Kỳ',
@@ -227,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     CommonTextField(
                       placeHolder: 'Country',
-                      controller: _controllerUnitTxt
+                      controller: _countryController
                         ..text = countryList[countryIndexSelected],
                       suffixIcon: const Icon(
                         Icons.keyboard_arrow_down_rounded,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/courses/courses_list.dart';
 import 'package:lettutor_app/feature/profile/profile_page.dart';
 
+import '../teachers/teachers_list/teachers_list_page.dart';
+
 final GlobalKey<ScaffoldState> keyDrawerHomePage = GlobalKey();
 
 class HomePage extends StatefulWidget {
@@ -20,8 +22,8 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
-    _tabController.index = 4;
-    _currentIndex = 4;
+    _tabController.index = 0;
+    _currentIndex = 0;
   }
 
   @override
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage>
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: const [
-          CoursesList(),
+          TeachersListPage(),
           CoursesList(),
           CoursesList(),
           CoursesList(),
@@ -77,7 +79,7 @@ class _HomePageState extends State<HomePage>
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
-              label: 'Tutor',
+              label: 'Tutors',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month),

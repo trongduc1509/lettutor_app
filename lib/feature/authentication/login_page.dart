@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/authentication/forgot_password.dart';
 import 'package:lettutor_app/feature/authentication/register_page.dart';
 
+import '../home/home_page.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -143,7 +145,9 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  )),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),
