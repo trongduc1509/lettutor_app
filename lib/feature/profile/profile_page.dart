@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor_app/feature/become_teacher/become_teacher_page.dart';
 import 'package:lettutor_app/shared/widgets/date_picker.dart';
 
 import '../../base/util/notifier.dart';
@@ -325,10 +326,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 10.0,
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                          onPressed: () {}, child: const Text('Save changes')),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const BecomeTeacherPage(),
+                                )),
+                            child: const Text('Become a tutor')),
+                        ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Save changes')),
+                      ],
                     ),
                   ],
                 ),
