@@ -36,7 +36,7 @@ class _TeachersListPageState extends State<TeachersListPage> {
     'TOEIC',
   ];
   int nationCurrentIndex = 0;
-  late DateTime availableDate;
+  DateTime? availableDate;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +128,7 @@ class _TeachersListPageState extends State<TeachersListPage> {
                 height: 5.0,
               ),
               DatePickerView(
+                date: availableDate,
                 active: true,
                 title: 'Select a day',
                 onDateChosen: (chosenDate) {
