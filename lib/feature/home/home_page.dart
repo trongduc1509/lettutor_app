@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/courses/courses_list.dart';
+import 'package:lettutor_app/feature/history/history_list_page.dart';
 import 'package:lettutor_app/feature/profile/profile_page.dart';
 import 'package:lettutor_app/feature/schedule/schedule_list_page.dart';
 
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage>
         children: const [
           TeachersListPage(),
           ScheduleListPage(),
-          CoursesList(),
+          HistoryListPage(),
           CoursesList(),
           ProfilePage(),
         ],
