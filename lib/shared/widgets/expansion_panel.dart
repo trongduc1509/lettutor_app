@@ -1,16 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-class ExpansionPanel extends StatelessWidget {
-  const ExpansionPanel({
+class ExpandablePanel extends StatelessWidget {
+  const ExpandablePanel({
     Key? key,
     required this.title,
     required this.items,
   }) : super(key: key);
 
   final String title;
-  final List<ExpansionModel> items;
+  final List<ExpandableModel> items;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +57,8 @@ class ExpansionPanel extends StatelessWidget {
   }
 }
 
-class ExpansionModel {
-  const ExpansionModel({
+class ExpandableModel {
+  const ExpandableModel({
     required this.title,
   });
 

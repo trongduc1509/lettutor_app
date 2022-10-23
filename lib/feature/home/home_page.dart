@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/courses/courses_list.dart';
 import 'package:lettutor_app/feature/profile/profile_page.dart';
+import 'package:lettutor_app/feature/schedule/schedule_list_page.dart';
 
 import '../teachers/teachers_list/teachers_list_page.dart';
 
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage>
         controller: _tabController,
         children: const [
           TeachersListPage(),
-          CoursesList(),
+          ScheduleListPage(),
           CoursesList(),
           CoursesList(),
           ProfilePage(),
