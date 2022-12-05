@@ -1,3 +1,5 @@
+import 'package:alice/alice.dart';
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../resource/resource.base.dart';
@@ -16,6 +18,7 @@ class ApiGateway {
     int connectTimeout = 10000,
     int receiveTimeout = 30000,
     int sendTimeout = 30000,
+    this.alice,
     Map<String, dynamic>? headers,
     String? contentType,
     BaseOptions? options,
@@ -24,38 +27,40 @@ class ApiGateway {
           baseUrl: endpoint,
           connectTimeout: connectTimeout,
           receiveTimeout: receiveTimeout,
-          sendTimeout: sendTimeout,
           headers: headers,
           contentType: contentType,
         ) ??
         BaseOptions(
           baseUrl: endpoint,
           connectTimeout: connectTimeout,
-          receiveTimeout: receiveTimeout,
-          sendTimeout: sendTimeout,
           headers: headers,
           contentType: contentType,
         );
     _dioInstance = Dio(_options);
-    configureInterceptors();
+    _configureInterceptors();
   }
 
   final String endpoint;
   final List<Interceptor>? interceptors;
+  late final Alice? alice;
 
   late Dio _dioInstance;
 
   Dio get dio => _dioInstance;
 
-  void configureInterceptors() {
+  void _configureInterceptors() {
     if (interceptors != null) {
       _dioInstance.interceptors
           .addAll([DefaultErrorHandlerInterceptor(), ...interceptors!]);
     } else {
       _dioInstance.interceptors.addAll([
-        DefaultErrorHandlerInterceptor(),
         DefaultResponseHandlerInterceptor(),
+        DefaultErrorHandlerInterceptor()
       ]);
+    }
+
+    if (alice != null) {
+      _dioInstance.interceptors.add(alice!.getDioInterceptor());
     }
   }
 
@@ -71,39 +76,54 @@ class ApiGateway {
     switch (method) {
       case HTTPMethod.get:
         return _dioInstance
-            .get(resource.path,
-                queryParameters: params,
-                onReceiveProgress: onReceivedProgress,
-                options: options)
+            .get(
+              resource.path,
+              queryParameters: params,
+              onReceiveProgress: onReceivedProgress,
+              options: options,
+            )
             .catchError((error) => _errorWrapper(error, resource));
       case HTTPMethod.post:
         return _dioInstance
-            .post(resource.path,
-                data: data,
-                queryParameters: params,
-                onSendProgress: onSendProgress,
-                onReceiveProgress: onReceivedProgress,
-                options: options)
+            .post(
+              resource.path,
+              data: data,
+              queryParameters: params,
+              onSendProgress: onSendProgress,
+              onReceiveProgress: onReceivedProgress,
+              options: options,
+            )
             .catchError((error) => _errorWrapper(error, resource));
       case HTTPMethod.put:
         return _dioInstance
-            .put(resource.path,
-                data: data,
-                onSendProgress: onSendProgress,
-                onReceiveProgress: onReceivedProgress,
-                options: options)
+            .put(
+              resource.path,
+              data: data,
+              queryParameters: params,
+              onSendProgress: onSendProgress,
+              onReceiveProgress: onReceivedProgress,
+              options: options,
+            )
             .catchError((error) => _errorWrapper(error, resource));
       case HTTPMethod.delete:
         return _dioInstance
-            .delete(resource.path, queryParameters: params, options: options)
+            .delete(
+              resource.path,
+              queryParameters: params,
+              options: options,
+              data: data,
+            )
             .catchError((error) => _errorWrapper(error, resource));
       case HTTPMethod.patch:
         return _dioInstance
-            .patch(resource.path,
-                data: data,
-                onSendProgress: onSendProgress,
-                onReceiveProgress: onReceivedProgress,
-                options: options)
+            .patch(
+              resource.path,
+              data: data,
+              queryParameters: params,
+              onSendProgress: onSendProgress,
+              onReceiveProgress: onReceivedProgress,
+              options: options,
+            )
             .catchError((error) => _errorWrapper(error, resource));
     }
   }
