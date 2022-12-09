@@ -1,7 +1,7 @@
-abstract class StorageClient {
-  final Map<String, String> _sessionStorage = {};
+import 'package:lettutor_app/feature/authentication/domain/enities/token_entity.dart';
 
-  Future<void> start();
+abstract class StorageClient {
+  final Map<String, dynamic> _sessionStorage = {};
 
   Future<bool> putString(String key, String value);
 
@@ -23,5 +23,5 @@ abstract class StorageClient {
 
   Future clear();
 
-  Map<String, String> get sessionStorage => _sessionStorage;
+  Map<String, dynamic> get sessionStorage => _sessionStorage;
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'config/main.dart';
+import 'di/injection/injection.dart';
 import 'feature/authentication/login_page.dart';
 
-void main() {
+void main() async {
+  await Injection.inject();
+  await configureApp();
   runApp(const MyApp());
 }
 

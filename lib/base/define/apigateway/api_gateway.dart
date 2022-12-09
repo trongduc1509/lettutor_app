@@ -1,19 +1,30 @@
 import 'package:alice/alice.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:lettutor_app/feature/authentication/domain/repositories/authentication_repository.dart';
 
+import '../../../feature/user/domain/repositories/user_repository.dart';
 import '../resource/resource.base.dart';
 import 'exception/app_exception.dart';
 import 'exception/network_error_code.dart';
 import 'exception/network_exception.dart';
+import 'interceptors/authentication_interceptor.dart';
 import 'interceptors/default_error_handler_interceptor.dart';
 import 'interceptors/default_response_handler_interceptor.dart';
+import 'interceptors/refresh_token_interceptor.dart';
 
 enum HTTPMethod { get, post, put, delete, patch }
 
+enum ApiType {
+  public,
+  user,
+}
+
 class ApiGateway {
   ApiGateway(
-    this.endpoint, {
+    this.endpoint,
+    this._authRepository,
+    this._userRepository, {
+    required this.apiType,
     this.interceptors,
     int connectTimeout = 10000,
     int receiveTimeout = 30000,
@@ -33,6 +44,7 @@ class ApiGateway {
         BaseOptions(
           baseUrl: endpoint,
           connectTimeout: connectTimeout,
+          receiveTimeout: receiveTimeout,
           headers: headers,
           contentType: contentType,
         );
@@ -41,6 +53,9 @@ class ApiGateway {
   }
 
   final String endpoint;
+  final ApiType apiType;
+  final AuthenticationRepository _authRepository;
+  final UserRepository _userRepository;
   final List<Interceptor>? interceptors;
   late final Alice? alice;
 
@@ -49,18 +64,41 @@ class ApiGateway {
   Dio get dio => _dioInstance;
 
   void _configureInterceptors() {
-    if (interceptors != null) {
-      _dioInstance.interceptors
-          .addAll([DefaultErrorHandlerInterceptor(), ...interceptors!]);
-    } else {
-      _dioInstance.interceptors.addAll([
-        DefaultResponseHandlerInterceptor(),
-        DefaultErrorHandlerInterceptor()
-      ]);
-    }
+    // if (interceptors != null) {
+    //   _dioInstance.interceptors
+    //       .addAll([DefaultErrorHandlerInterceptor(), ...interceptors!]);
+    // } else {
+    //   _dioInstance.interceptors.addAll([
+    //     DefaultResponseHandlerInterceptor(),
+    //     DefaultErrorHandlerInterceptor()
+    //   ]);
+    // }
 
     if (alice != null) {
       _dioInstance.interceptors.add(alice!.getDioInterceptor());
+    }
+
+    switch (apiType) {
+      case ApiType.public:
+        if (interceptors == null) {
+          _dioInstance.interceptors.addAll([
+            DefaultResponseHandlerInterceptor(),
+            DefaultErrorHandlerInterceptor()
+          ]);
+        }
+        break;
+      case ApiType.user:
+        if (interceptors == null) {
+          _dioInstance.interceptors.addAll([
+            DefaultResponseHandlerInterceptor(),
+            DefaultErrorHandlerInterceptor()
+          ]);
+        }
+        _dioInstance.interceptors.addAll([
+          AuthenticationInterceptor(_authRepository),
+          RefreshTokenInterceptor(_dioInstance, _authRepository),
+        ]);
+        break;
     }
   }
 

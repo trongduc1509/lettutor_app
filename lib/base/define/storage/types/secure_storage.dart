@@ -2,7 +2,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lettutor_app/base/define/storage/storage_client.dart';
 
 class SecureStorage extends StorageClient {
-  SecureStorage();
+  factory SecureStorage() => _instance;
+
+  SecureStorage._internal() {
+    _secureStorage = const FlutterSecureStorage();
+  }
+
+  static final SecureStorage _instance = SecureStorage._internal();
 
   late FlutterSecureStorage _secureStorage;
 
@@ -57,10 +63,5 @@ class SecureStorage extends StorageClient {
   Future<bool> remove(String key) async {
     await _secureStorage.delete(key: key);
     return true;
-  }
-
-  @override
-  Future<void> start() async {
-    _secureStorage = const FlutterSecureStorage();
   }
 }

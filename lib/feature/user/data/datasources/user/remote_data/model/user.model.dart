@@ -1,19 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lettutor_app/base/extension/time.dart';
-import 'package:lettutor_app/feature/authentication/domain/enities/token_entity.dart';
+import '../../../../../../../base/extension/time.dart';
+import '../../../../../domain/entities/user_entity.dart';
 
-import '../../../../../domain/enities/login_entity.dart';
-
-part 'login.model.g.dart';
+part 'user.model.g.dart';
 
 @JsonSerializable()
-class LoginBaseModel extends LoginEntity {
-  final LoginUserBaseModel? user;
-  final TokensBaseModel? tokens;
+class UserBaseModel extends UserEntity {
+  final UserItemBaseModel? user;
 
-  LoginBaseModel({
+  UserBaseModel({
     this.user,
-    this.tokens,
   }) : super(
           userId: user?.id,
           userEmail: user?.email,
@@ -22,19 +18,16 @@ class LoginBaseModel extends LoginEntity {
           userCountry: user?.country,
           userPhone: user?.phone,
           userIsActivated: user?.isActivated,
-          userIsPhoneActivated: user?.isPhoneActivated,
-          accessToken: tokens?.access,
-          refreshToken: tokens?.refresh,
         );
 
-  Map<String, dynamic> toJson() => _$LoginBaseModelToJson(this);
+  static UserBaseModel fromJson(Map<String, dynamic> json) =>
+      _$UserBaseModelFromJson(json);
 
-  static LoginBaseModel fromJson(Map<String, dynamic> json) =>
-      _$LoginBaseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$UserBaseModelToJson(this);
 }
 
 @JsonSerializable()
-class LoginUserBaseModel {
+class UserItemBaseModel {
   final String? id;
   final String? email;
   final String? name;
@@ -46,18 +39,22 @@ class LoginUserBaseModel {
   @JsonKey(fromJson: jsonToTime)
   final DateTime? birthday;
   final bool? isActivated;
+  //Null? tutorInfo;
   final WalletInfoBaseModel? walletInfo;
-  final List<String>? courses;
   final String? requireNote;
   final String? level;
   final List<LearnTopicsBaseModel>? learnTopics;
   final List<String>? testPreparations;
   final bool? isPhoneActivated;
   final int? timezone;
+  final ReferralInfoBaseModel? referralInfo;
   final String? studySchedule;
   final bool? canSendMessage;
+  final String? studentGroup;
+  //Null? studentInfo;
+  final int? avgRating;
 
-  const LoginUserBaseModel({
+  const UserItemBaseModel({
     this.id,
     this.email,
     this.name,
@@ -68,43 +65,37 @@ class LoginUserBaseModel {
     this.language,
     this.birthday,
     this.isActivated,
+    //this.tutorInfo,
     this.walletInfo,
-    this.courses,
     this.requireNote,
     this.level,
     this.learnTopics,
     this.testPreparations,
     this.isPhoneActivated,
     this.timezone,
+    this.referralInfo,
     this.studySchedule,
     this.canSendMessage,
+    this.studentGroup,
+    //this.studentInfo,
+    this.avgRating,
   });
 
-  static LoginUserBaseModel fromJson(Map<String, dynamic> json) =>
-      _$LoginUserBaseModelFromJson(json);
+  static UserItemBaseModel fromJson(Map<String, dynamic> json) =>
+      _$UserItemBaseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LoginUserBaseModelToJson(this);
+  Map<String, dynamic> toJson() => _$UserItemBaseModelToJson(this);
 }
 
 @JsonSerializable()
 class WalletInfoBaseModel {
-  final String? id;
-  final String? userId;
   final String? amount;
   final bool? isBlocked;
-  @JsonKey(fromJson: jsonToTime)
-  final DateTime? createdAt;
-  @JsonKey(fromJson: jsonToTime)
-  final DateTime? updatedAt;
   final int? bonus;
 
   const WalletInfoBaseModel({
-    this.id,
-    this.userId,
     this.amount,
     this.isBlocked,
-    this.createdAt,
-    this.updatedAt,
     this.bonus,
   });
 
@@ -133,34 +124,31 @@ class LearnTopicsBaseModel {
 }
 
 @JsonSerializable()
-class TokensBaseModel {
-  final TokenItemBaseModel? access;
-  final TokenItemBaseModel? refresh;
+class ReferralInfoBaseModel {
+  final String? referralCode;
+  final ReferralPackInfoBaseModel? referralPackInfo;
 
-  const TokensBaseModel({
-    this.access,
-    this.refresh,
+  const ReferralInfoBaseModel({
+    this.referralCode,
+    this.referralPackInfo,
   });
 
-  static TokensBaseModel fromJson(Map<String, dynamic> json) =>
-      _$TokensBaseModelFromJson(json);
+  static ReferralInfoBaseModel fromJson(Map<String, dynamic> json) =>
+      _$ReferralInfoBaseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TokensBaseModelToJson(this);
+  Map<String, dynamic> toJson() => _$ReferralInfoBaseModelToJson(this);
 }
 
 @JsonSerializable()
-class TokenItemBaseModel extends TokenEntity {
-  final String? token;
-  @JsonKey(fromJson: jsonToTime)
-  final DateTime? expires;
+class ReferralPackInfoBaseModel {
+  final int? earnPercent;
 
-  TokenItemBaseModel({
-    this.token,
-    this.expires,
-  }) : super(tokenDetail: token, expDate: expires ?? startDay);
+  const ReferralPackInfoBaseModel({
+    this.earnPercent,
+  });
 
-  static TokenItemBaseModel fromJson(Map<String, dynamic> json) =>
-      _$TokenItemBaseModelFromJson(json);
+  static ReferralPackInfoBaseModel fromJson(Map<String, dynamic> json) =>
+      _$ReferralPackInfoBaseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TokenItemBaseModelToJson(this);
+  Map<String, dynamic> toJson() => _$ReferralPackInfoBaseModelToJson(this);
 }

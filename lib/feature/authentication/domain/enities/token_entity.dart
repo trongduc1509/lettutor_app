@@ -1,5 +1,3 @@
-import 'package:lettutor_app/base/extension/time.dart';
-
 class TokenEntity {
   const TokenEntity({
     this.tokenDetail = '',
@@ -8,4 +6,14 @@ class TokenEntity {
 
   final String? tokenDetail;
   final DateTime? expDate;
+
+  bool get valid => validDate && validToken;
+
+  bool get validDate {
+    if (expDate == null) return false;
+    final now = DateTime.now();
+    return expDate!.difference(now).inMilliseconds > 1000;
+  }
+
+  bool get validToken => tokenDetail!.isNotEmpty;
 }
