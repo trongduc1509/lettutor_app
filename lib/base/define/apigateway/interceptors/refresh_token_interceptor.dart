@@ -3,14 +3,13 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:lettutor_app/config/app_config.dart';
 import 'package:lettutor_app/feature/authentication/data/datasource/auth/remote_data/model/login.model.dart';
+import 'package:lettutor_app/feature/authentication/data/datasource/token/local_data/token_local_datasource.dart';
 import 'package:lettutor_app/feature/authentication/domain/enities/token_entity.dart';
 import 'package:lettutor_app/feature/authentication/domain/repositories/authentication_repository.dart';
 import 'package:lettutor_app/feature/authentication/domain/usecases/refresh_token_usecase/refresh_token_params.usecase.dart';
-import 'package:lettutor_app/feature/user/domain/repositories/user_repository.dart';
 
 import '../../../../feature/authentication/data/datasource/auth/remote_data/resource/refresh_token_resource.dart';
 import '../../../../shared/managers/events_manager.dart';
-import '../../resource/resource.base.dart';
 
 // enum RefreshTokenState { idle, refreshing }
 
@@ -33,12 +32,12 @@ import '../../resource/resource.base.dart';
 class RefreshTokenInterceptor extends QueuedInterceptor {
   RefreshTokenInterceptor(
     this._dio,
-    this._authRepository,
-    // this._userRepository,
+    this._tokenLocalDatasource,
+    // this._authRepository,
   );
 
-  final AuthenticationRepository _authRepository;
-  // final UserRepository _userRepository;
+  // final AuthenticationRepository _authRepository;
+  final TokenLocalDatasource _tokenLocalDatasource;
   final Dio _dio;
 
   @override
@@ -51,7 +50,7 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
     if (err.response!.statusCode == 401 &&
         err.response!.requestOptions.path !=
             '/${const RefreshTokenResource().path}') {
-      final refreshToken = _authRepository.getRefreshToken();
+      final refreshToken = _tokenLocalDatasource.getRefreshToken();
       if (refreshToken == null) {
         handler.next(err);
         return;
@@ -75,9 +74,8 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
         final loginResponse = LoginBaseModel.fromJson(
             refreshResponse.data as Map<String, dynamic>);
         newAccessToken = loginResponse.accessToken;
-        await _authRepository.saveSession(
-            accessToken: newAccessToken ?? const TokenEntity(),
-            refreshToken: refreshToken);
+        await _tokenLocalDatasource.saveSession(
+            newAccessToken ?? const TokenEntity(), refreshToken);
 
         final retryHeaders = err.requestOptions.headers;
         retryHeaders['Authorization'] = 'Bearer ${newAccessToken?.tokenDetail}';

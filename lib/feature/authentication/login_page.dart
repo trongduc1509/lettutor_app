@@ -6,7 +6,12 @@ import 'package:lettutor_app/feature/authentication/register_page.dart';
 import '../home/home_page.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({
+    Key? key,
+    this.continueRoute,
+  }) : super(key: key);
+
+  final Route? continueRoute;
 
   @override
   Widget build(BuildContext context) {

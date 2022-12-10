@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:lettutor_app/feature/authentication/data/datasource/token/local_data/token_local_datasource.dart';
 import 'package:lettutor_app/feature/authentication/domain/repositories/authentication_repository.dart';
 import 'package:lettutor_app/feature/user/domain/repositories/user_repository.dart';
 import 'package:sample_exception/sample_exception.dart';
@@ -159,15 +160,15 @@ import '../exception/authentication_exception.dart';
 
 class AuthenticationInterceptor extends QueuedInterceptor {
   AuthenticationInterceptor(
-    this._authRepository,
+    this._tokenLocalDatasource,
   );
 
   static const accessToken = 'Authorization';
-  final AuthenticationRepository _authRepository;
+  final TokenLocalDatasource _tokenLocalDatasource;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final accessTokenDetail = _authRepository.getAccessToken();
+    final accessTokenDetail = _tokenLocalDatasource.getAccessToken();
     options.headers[accessToken] =
         'Bearer ${accessTokenDetail?.tokenDetail ?? ""}';
     super.onRequest(options, handler);

@@ -11,12 +11,12 @@ class StorageGateway {
 
   final StorageClient storage;
 
-  factory StorageGateway.defaultGateway() => StorageGateway(
-        storage: getIt.get<SecureStorage>(),
-      );
+  // factory StorageGateway.defaultGateway() => StorageGateway(
+  //       storage: getIt.get<SecureStorage>(),
+  //     );
 
   factory StorageGateway.secureGateway() => StorageGateway(
-        storage: getIt.get<DefaultStorage>(),
+        storage: getIt.get<SecureStorage>(),
       );
 
   Future<bool> putString(String key, String value) =>

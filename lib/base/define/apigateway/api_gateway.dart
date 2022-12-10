@@ -1,8 +1,7 @@
 import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
-import 'package:lettutor_app/feature/authentication/domain/repositories/authentication_repository.dart';
 
-import '../../../feature/user/domain/repositories/user_repository.dart';
+import '../../../feature/authentication/data/datasource/token/local_data/token_local_datasource.dart';
 import '../resource/resource.base.dart';
 import 'exception/app_exception.dart';
 import 'exception/network_error_code.dart';
@@ -22,8 +21,7 @@ enum ApiType {
 class ApiGateway {
   ApiGateway(
     this.endpoint,
-    this._authRepository,
-    this._userRepository, {
+    this._tokenLocalDatasource, {
     required this.apiType,
     this.interceptors,
     int connectTimeout = 10000,
@@ -54,8 +52,7 @@ class ApiGateway {
 
   final String endpoint;
   final ApiType apiType;
-  final AuthenticationRepository _authRepository;
-  final UserRepository _userRepository;
+  final TokenLocalDatasource _tokenLocalDatasource;
   final List<Interceptor>? interceptors;
   late final Alice? alice;
 
@@ -95,8 +92,8 @@ class ApiGateway {
           ]);
         }
         _dioInstance.interceptors.addAll([
-          AuthenticationInterceptor(_authRepository),
-          RefreshTokenInterceptor(_dioInstance, _authRepository),
+          AuthenticationInterceptor(_tokenLocalDatasource),
+          RefreshTokenInterceptor(_dioInstance, _tokenLocalDatasource),
         ]);
         break;
     }
