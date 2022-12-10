@@ -10,7 +10,7 @@ RefreshTokenUseCaseParams _$RefreshTokenUseCaseParamsFromJson(
         Map<String, dynamic> json) =>
     RefreshTokenUseCaseParams(
       refreshToken: json['refreshToken'] as String?,
-      timezone: json['timezone'] as int?,
+      timezone: json['timezone'] as int? ?? 7,
     );
 
 Map<String, dynamic> _$RefreshTokenUseCaseParamsToJson(

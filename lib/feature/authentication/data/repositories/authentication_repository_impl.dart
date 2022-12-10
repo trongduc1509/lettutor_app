@@ -72,8 +72,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<void> saveSession(
-      {required TokenEntity accessToken, required TokenEntity refreshToken}) {
-    // TODO: implement saveSession
-    throw UnimplementedError();
-  }
+          {required TokenEntity accessToken,
+          required TokenEntity refreshToken}) =>
+      tokenLocalDatasource.saveSession(accessToken, refreshToken);
 }
