@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/authentication/forgot_password.dart';
 import 'package:lettutor_app/feature/authentication/register_page.dart';
 
+import '../../gen/assets.gen.dart';
 import '../home/home_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -23,7 +24,7 @@ class LoginPage extends StatelessWidget {
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Image.asset(
-            'assets/images/lettutor_logo.png',
+            Assets.images.lettutorLogo.path,
             height: 24.0,
           ),
           IconButton(
@@ -36,8 +37,12 @@ class LoginPage extends StatelessWidget {
         ]),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 32.0,
+            vertical: 16.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
