@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lettutor_app/base/define/navigation/navigation.dart';
-import 'package:lettutor_app/feature/initialization/presentation/blocs/initialization_bloc.dart';
-import 'package:lettutor_app/feature/initialization/presentation/blocs/initialization_state.dart';
-import 'package:lettutor_app/feature/initialization/presentation/widgets/splash.dart';
+import '../../../../base/define/navigation/navigation.dart';
+import '../blocs/initialization_bloc.dart';
+import '../blocs/initialization_state.dart';
+import '../widgets/splash.dart';
 
 class StartContent extends StatelessWidget {
   const StartContent({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class StartContent extends StatelessWidget {
                 .pushReplacement(NavigationService.createHomeRoute());
           } else {
             await Navigator.of(context)
-                .pushReplacement(NavigationService.createAuthRoute());
+                .pushReplacement(NavigationService.createLoginRoute());
           }
         }
       },

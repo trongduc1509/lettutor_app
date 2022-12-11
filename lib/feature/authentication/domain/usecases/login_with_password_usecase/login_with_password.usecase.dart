@@ -5,11 +5,11 @@ import '../../enities/login_entity.dart';
 import 'login_with_password_params.usecase.dart';
 import '../../../../../base/define/usecase/usecase.base.dart';
 
-class LoginUseCase
+class LoginWithPasswordUseCase
     with
         UseCase<LoginWithPasswordUseCaseParams,
             Either<AppException, LoginEntity>> {
-  const LoginUseCase({
+  const LoginWithPasswordUseCase({
     required this.authRepo,
   });
 

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor_app/base/define/navigation/navigation.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -11,12 +12,12 @@ class RegisterPage extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         centerTitle: true,
-        leading: IconButton(
-            onPressed: Navigator.of(context).pop,
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.blue,
-            )),
+        // leading: IconButton(
+        //     onPressed: Navigator.of(context).pop,
+        //     icon: const Icon(
+        //       Icons.arrow_back_ios_new,
+        //       color: Colors.blue,
+        //     )),
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Image.asset(
@@ -186,7 +187,9 @@ class RegisterPage extends StatelessWidget {
                       TextSpan(
                         text: 'Log in',
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.of(context).pop(),
+                          ..onTap = () => Navigator.of(context).pushReplacement(
+                                NavigationService.createLoginRoute(),
+                              ),
                         style: const TextStyle(
                           color: Colors.blue,
                           fontSize: 18.0,

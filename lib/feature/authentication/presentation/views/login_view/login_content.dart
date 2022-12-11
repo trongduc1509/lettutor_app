@@ -2,6 +2,7 @@ import 'package:custom_state/custom_state.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lettutor_app/base/define/navigation/navigation.dart';
 import 'package:lettutor_app/base/define/text.dart';
 import 'package:lettutor_app/feature/authentication/presentation/blocs/login_bloc/login_bloc.dart';
 import 'package:lettutor_app/shared/widgets/progress_button.dart';
@@ -21,7 +22,13 @@ class _LoginContentState extends State<LoginContent> {
 
   @override
   Widget build(BuildContext context) => BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) {},
+        listener: (context, state) async {
+          if (state is LoginDoneState) {
+            await Navigator.of(context).pushReplacement(
+              NavigationService.createHomeRoute(),
+            );
+          } else if (state is LoginErrorState) {}
+        },
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -151,8 +158,9 @@ class _LoginContentState extends State<LoginContent> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //   builder: (context) => const ForgotPasswordPage()));
+                      Navigator.of(context).push(
+                        NavigationService.createForgotPasswordRoute(),
+                      );
                     },
                     child: const Text(
                       'Forgot Password?',
@@ -171,18 +179,31 @@ class _LoginContentState extends State<LoginContent> {
                         return ProgressButton(
                           label: TextDoc.login,
                           states: state.buttonState,
-                          onTab: () {
-                            print(
-                                'login event ${state.email} ${state.password}');
-                          },
+                          onTab: () =>
+                              context.read<LoginBloc>().add(LoginSendEvent(
+                                    email: _emailController.text,
+                                    password: _passController.text,
+                                  )),
+                        );
+                      } else if (state is LoginProcessingState) {
+                        return ProgressButton(
+                          label: TextDoc.login,
+                          states: const {ButtonState.progressing},
+                          onTab: () =>
+                              context.read<LoginBloc>().add(LoginSendEvent(
+                                    email: _emailController.text,
+                                    password: _passController.text,
+                                  )),
                         );
                       }
                       return ProgressButton(
                         label: TextDoc.login,
-                        states: const {ButtonState.forceDisabled},
-                        onTab: () {
-                          print('Disabled');
-                        },
+                        states: const {ButtonState.initial},
+                        onTab: () =>
+                            context.read<LoginBloc>().add(LoginSendEvent(
+                                  email: _emailController.text,
+                                  password: _passController.text,
+                                )),
                       );
                     },
                   ),
@@ -209,14 +230,14 @@ class _LoginContentState extends State<LoginContent> {
                       IconButton(
                           onPressed: () {},
                           icon: Image.asset(
-                            'assets/images/facebook.png',
+                            Assets.images.facebook.path,
                             height: 40.0,
                             width: 40.0,
                           )),
                       IconButton(
                           onPressed: () {},
                           icon: Image.asset(
-                            'assets/images/google.png',
+                            Assets.images.google.path,
                             height: 40.0,
                             width: 40.0,
                           )),
@@ -234,9 +255,9 @@ class _LoginContentState extends State<LoginContent> {
                             text: 'Sign up',
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => const RegisterPage(),
-                                //   ));
+                                Navigator.of(context).pushReplacement(
+                                  NavigationService.createRegisterRoute(),
+                                );
                               },
                             style: const TextStyle(
                               color: Colors.blue,

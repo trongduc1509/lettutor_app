@@ -11,18 +11,14 @@ class RefreshTokenUseCase
     with UseCase<RefreshTokenUseCaseParams, Either<AppException, LoginEntity>> {
   const RefreshTokenUseCase({
     required this.authRepo,
-    required this.userRepo,
   });
 
   final AuthenticationRepository authRepo;
-  final UserRepository userRepo;
 
   @override
   Future<Either<AppException, LoginEntity>> execute(
-      RefreshTokenUseCaseParams params) {
-    // TODO: implement execute
-    throw UnimplementedError();
-  }
+          RefreshTokenUseCaseParams params) =>
+      authRepo.refreshToken(params);
 
   // @override
   // Future<LoginResponse> execute() async {

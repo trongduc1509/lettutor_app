@@ -20,10 +20,18 @@ class LoginValidateState extends LoginState {
   final Set<ButtonState> buttonState;
 }
 
-class LoginDoneState {
+class LoginProcessingState extends LoginState {
+  const LoginProcessingState();
+}
+
+class LoginDoneState extends LoginState {
   const LoginDoneState();
 }
 
-class LoginErrorState {
-  const LoginErrorState();
+class LoginErrorState extends LoginState {
+  const LoginErrorState({
+    required this.exception,
+  });
+
+  final AppException exception;
 }

@@ -4,6 +4,11 @@ class TokenEntity {
     this.expDate,
   });
 
+  factory TokenEntity.expired() => TokenEntity(
+        tokenDetail: '',
+        expDate: DateTime.now(),
+      );
+
   final String? tokenDetail;
   final DateTime? expDate;
 
