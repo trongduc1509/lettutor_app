@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/feature/courses/courses_list.dart';
-import 'package:lettutor_app/feature/history/history_list_page.dart';
-import 'package:lettutor_app/feature/profile/profile_page.dart';
-import 'package:lettutor_app/feature/schedule/schedule_list_page.dart';
 
+import '../courses/courses_list.dart';
+import '../history/history_list_page.dart';
+import '../schedule/schedule_list_page.dart';
+import '../profile/presentation/views/profile_page.dart';
 import '../teachers/teachers_list/teachers_list_page.dart';
 
 final GlobalKey<ScaffoldState> keyDrawerHomePage = GlobalKey();
