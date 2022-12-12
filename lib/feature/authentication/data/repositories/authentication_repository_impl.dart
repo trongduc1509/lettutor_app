@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:lettutor_app/feature/authentication/domain/enities/login_entity.dart';
+import 'package:lettutor_app/feature/authentication/domain/usecases/register_with_email_pass_usecase/register_email_pass_params.usecase.dart';
 
 import '../../../../di/di_module.dart';
 import '../../domain/enities/token_entity.dart';
@@ -52,6 +53,25 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
           error: e,
           displayMessage: 'Lỗi đăng nhập với email & mật khẩu',
           displayTitle: 'Error while login with email & password',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<AppException, LoginEntity>> registerEmailPassword(
+      RegisterEmailPassUseCaseParams params) async {
+    try {
+      var result = await authRemoteDatasource.registerWithEmailPassword(params);
+      return Right(result);
+    } on AppException catch (s) {
+      return Left(s);
+    } on Exception catch (e) {
+      return Left(
+        AppException(
+          error: e,
+          displayMessage: 'Lỗi đăng ký với email & mật khẩu',
+          displayTitle: 'Error while register with email & password',
         ),
       );
     }

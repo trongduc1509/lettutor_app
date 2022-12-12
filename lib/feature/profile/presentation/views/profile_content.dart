@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lettutor_app/base/define/navigation/navigation.dart';
 
-import '../../../../base/util/notifier.dart';
+import '../../../../base/define/navigation/navigation.dart';
 import '../../../../gen/assets.gen.dart';
-import '../../../../shared/widgets/common_txt.dart';
+import '../../../../shared/widgets/custom_shimmer.dart';
 import '../../../../shared/widgets/date_picker.dart';
 import '../blocs/profile_bloc/profile_bloc.dart';
 
@@ -110,6 +109,12 @@ class _ProfileContentState extends State<ProfileContent> {
                                             width: 100,
                                             imageUrl:
                                                 state.userInfo.userImg ?? '',
+                                            placeholder: (context, url) =>
+                                                MyShimmer.shimmerBuilder(
+                                              child: Container(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                             errorWidget:
                                                 (context, url, error) =>
                                                     Container(

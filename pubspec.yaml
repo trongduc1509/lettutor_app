@@ -52,6 +52,7 @@ dependencies:
   copy_with_extension_gen: ^4.0.4
   custom_state: ^0.0.3
   cached_network_image: ^3.2.0
+  shimmer: ^2.0.0
   
 dependency_overrides:
   permission_handler: "any"

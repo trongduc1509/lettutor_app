@@ -17,6 +17,7 @@ class $AssetsImagesGen {
   AssetGenImage get courses => const AssetGenImage('assets/images/courses.png');
   AssetGenImage get facebook =>
       const AssetGenImage('assets/images/facebook.png');
+  AssetGenImage get filter => const AssetGenImage('assets/images/filter.png');
   AssetGenImage get google => const AssetGenImage('assets/images/google.png');
   AssetGenImage get history => const AssetGenImage('assets/images/history.png');
   AssetGenImage get lettutorLogo =>

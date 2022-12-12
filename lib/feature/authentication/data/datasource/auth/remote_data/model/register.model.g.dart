@@ -32,14 +32,12 @@ RegisterUserBaseModel _$RegisterUserBaseModelFromJson(
       avatar: json['avatar'] as String?,
       country: json['country'] as String?,
       phone: json['phone'] as String?,
-      language: json['language'] as String?,
       birthday: jsonToTime(json['birthday'] as String?),
       isActivated: json['isActivated'] as bool?,
       requireNote: json['requireNote'] as String?,
       level: json['level'] as String?,
       isPhoneActivated: json['isPhoneActivated'] as bool?,
       timezone: json['timezone'] as int?,
-      studySchedule: json['studySchedule'] as String?,
       canSendMessage: json['canSendMessage'] as bool?,
     );
 
@@ -52,14 +50,12 @@ Map<String, dynamic> _$RegisterUserBaseModelToJson(
       'avatar': instance.avatar,
       'country': instance.country,
       'phone': instance.phone,
-      'language': instance.language,
       'birthday': instance.birthday?.toIso8601String(),
       'isActivated': instance.isActivated,
       'requireNote': instance.requireNote,
       'level': instance.level,
       'isPhoneActivated': instance.isPhoneActivated,
       'timezone': instance.timezone,
-      'studySchedule': instance.studySchedule,
       'canSendMessage': instance.canSendMessage,
     };
 

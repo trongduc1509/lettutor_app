@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/feature/authentication/forgot_password.dart';
-import 'package:lettutor_app/feature/authentication/register_page.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../feature/authentication/forgot_password.dart';
 import '../../../feature/authentication/presentation/views/login_view/login_page.dart';
+import '../../../feature/authentication/presentation/views/register_view/register_page.dart';
 import '../../../feature/home/home_page.dart';
 
 class NavigationService {

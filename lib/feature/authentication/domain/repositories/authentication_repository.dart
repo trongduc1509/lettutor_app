@@ -5,6 +5,7 @@ import '../enities/login_entity.dart';
 import '../enities/token_entity.dart';
 import '../usecases/login_with_password_usecase/login_with_password_params.usecase.dart';
 import '../usecases/refresh_token_usecase/refresh_token_params.usecase.dart';
+import '../usecases/register_with_email_pass_usecase/register_email_pass_params.usecase.dart';
 
 abstract class AuthenticationRepository {
   Future<Either<AppException, LoginEntity>> refreshToken(
@@ -12,6 +13,9 @@ abstract class AuthenticationRepository {
 
   Future<Either<AppException, LoginEntity>> loginWithPassword(
       LoginWithPasswordUseCaseParams params);
+
+  Future<Either<AppException, LoginEntity>> registerEmailPassword(
+      RegisterEmailPassUseCaseParams params);
 
   TokenEntity? getAccessToken();
   TokenEntity? getRefreshToken();

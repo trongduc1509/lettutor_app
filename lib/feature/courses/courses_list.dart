@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor_app/feature/courses/entities/course_item.dart';
 
+import '../../base/theme/colors.dart';
+import '../../gen/assets.gen.dart';
+
 class CoursesList extends StatefulWidget {
   const CoursesList({Key? key}) : super(key: key);
 
@@ -67,19 +70,59 @@ class _CoursesListState extends State<CoursesList> {
                                       prefixIcon: Icon(Icons.search),
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
+                                              Radius.circular(4)),
                                           borderSide: BorderSide(
                                             color: Colors.grey,
                                           ))),
                                 ),
                               ),
                             ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.filter_alt,
-                                  color: Colors.blue,
-                                ))
+                            const SizedBox(
+                              width: 8.0,
+                            ),
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 1, color: AppColor().greyBorder),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: IconButton(
+                                    icon: SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset(
+                                        Assets.images.filter.path,
+                                        alignment: Alignment.center,
+                                        //fit: BoxFit.fitWidth,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      // EventManager().tempShopSelectedRetail?.add(
+                                      //     EventManager().getShopCurrentRetailPM(3) ??
+                                      //         const ShopsearchItem());
+                                      // readBloc<ConfirmDatLeBloc>()
+                                      //     .add(UpdateConfirmDatLeDrawer(
+                                      //   isRequest: false,
+                                      //   selectedState: state.status,
+                                      //   startDate: state.startDate,
+                                      //   endDate: state.endDate,
+                                      //   selectedStateOrtherRetail:
+                                      //       state.statusOtherRetail,
+                                      //   selectedStateRequestType: const [],
+                                      //   selectedStateMainWhs: const [],
+                                      // ));
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],

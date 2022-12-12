@@ -5,6 +5,7 @@ import 'package:lettutor_app/shared/widgets/common_txt.dart';
 import 'package:lettutor_app/shared/widgets/date_picker.dart';
 
 import '../../../base/util/notifier.dart';
+import '../../../gen/assets.gen.dart';
 
 class TeachersListPage extends StatefulWidget {
   const TeachersListPage({Key? key}) : super(key: key);
@@ -64,24 +65,76 @@ class _TeachersListPageState extends State<TeachersListPage> {
               const SizedBox(
                 height: 15.0,
               ),
-              TextFormField(
-                controller: _searchController,
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
-                decoration: const InputDecoration(
-                    hintText: 'Search courses',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 4.0,
-                      horizontal: 0,
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _searchController,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: const InputDecoration(
+                          hintText: 'Search tutor',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 4.0,
+                            horizontal: 0,
+                          ),
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ))),
                     ),
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                        ))),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  SizedBox(
+                    height: 48,
+                    width: 48,
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              width: 1, color: AppColor().greyBorder),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: IconButton(
+                          icon: SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: Image.asset(
+                              Assets.images.filter.path,
+                              alignment: Alignment.center,
+                              //fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          onPressed: () {
+                            // EventManager().tempShopSelectedRetail?.add(
+                            //     EventManager().getShopCurrentRetailPM(3) ??
+                            //         const ShopsearchItem());
+                            // readBloc<ConfirmDatLeBloc>()
+                            //     .add(UpdateConfirmDatLeDrawer(
+                            //   isRequest: false,
+                            //   selectedState: state.status,
+                            //   startDate: state.startDate,
+                            //   endDate: state.endDate,
+                            //   selectedStateOrtherRetail:
+                            //       state.statusOtherRetail,
+                            //   selectedStateRequestType: const [],
+                            //   selectedStateMainWhs: const [],
+                            // ));
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 10.0,

@@ -41,7 +41,7 @@ class RegisterUserBaseModel {
   final String? avatar;
   final String? country;
   final String? phone;
-  final String? language;
+  //final String? language;
   @JsonKey(fromJson: jsonToTime)
   final DateTime? birthday;
   final bool? isActivated;
@@ -49,7 +49,7 @@ class RegisterUserBaseModel {
   final String? level;
   final bool? isPhoneActivated;
   final int? timezone;
-  final String? studySchedule;
+  //final String? studySchedule;
   final bool? canSendMessage;
 
   const RegisterUserBaseModel({
@@ -59,14 +59,14 @@ class RegisterUserBaseModel {
     this.avatar,
     this.country,
     this.phone,
-    this.language,
+    //this.language,
     this.birthday,
     this.isActivated,
     this.requireNote,
     this.level,
     this.isPhoneActivated,
     this.timezone,
-    this.studySchedule,
+    //this.studySchedule,
     this.canSendMessage,
   });
 
