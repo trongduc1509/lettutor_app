@@ -8,8 +8,13 @@ class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => ProfileBloc(),
-        child: const ProfileContent(),
-      );
+  Widget build(BuildContext context) {
+    final _profileBloc = ProfileBloc();
+    return BlocProvider(
+      create: (context) => _profileBloc,
+      child: ProfileContent(
+        profileBloc: _profileBloc,
+      ),
+    );
+  }
 }

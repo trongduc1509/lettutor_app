@@ -42,19 +42,19 @@ class LoginUserBaseModel {
   final String? country;
   final String? phone;
   final List<String>? roles;
-  final String? language;
+  //final String? language;
   @JsonKey(fromJson: jsonToTime)
   final DateTime? birthday;
   final bool? isActivated;
   final WalletInfoBaseModel? walletInfo;
-  final List<String>? courses;
+  //final List<String>? courses;
   final String? requireNote;
   final String? level;
   final List<LearnTopicsBaseModel>? learnTopics;
-  final List<String>? testPreparations;
+  //final List<String>? testPreparations;
   final bool? isPhoneActivated;
   final int? timezone;
-  final String? studySchedule;
+  //final String? studySchedule;
   final bool? canSendMessage;
 
   const LoginUserBaseModel({
@@ -65,18 +65,18 @@ class LoginUserBaseModel {
     this.country,
     this.phone,
     this.roles,
-    this.language,
+    //this.language,
     this.birthday,
     this.isActivated,
     this.walletInfo,
-    this.courses,
+    //this.courses,
     this.requireNote,
     this.level,
     this.learnTopics,
-    this.testPreparations,
+    //this.testPreparations,
     this.isPhoneActivated,
     this.timezone,
-    this.studySchedule,
+    //this.studySchedule,
     this.canSendMessage,
   });
 

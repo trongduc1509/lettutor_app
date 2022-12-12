@@ -1,29 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login.model.dart';
+part of 'user_info_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-LoginBaseModel _$LoginBaseModelFromJson(Map<String, dynamic> json) =>
-    LoginBaseModel(
+UserInfoBaseModel _$UserInfoBaseModelFromJson(Map<String, dynamic> json) =>
+    UserInfoBaseModel(
       user: json['user'] == null
           ? null
-          : LoginUserBaseModel.fromJson(json['user'] as Map<String, dynamic>),
-      tokens: json['tokens'] == null
-          ? null
-          : TokensBaseModel.fromJson(json['tokens'] as Map<String, dynamic>),
+          : UserInfoDetailBaseModel.fromJson(
+              json['user'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$LoginBaseModelToJson(LoginBaseModel instance) =>
+Map<String, dynamic> _$UserInfoBaseModelToJson(UserInfoBaseModel instance) =>
     <String, dynamic>{
       'user': instance.user,
-      'tokens': instance.tokens,
     };
 
-LoginUserBaseModel _$LoginUserBaseModelFromJson(Map<String, dynamic> json) =>
-    LoginUserBaseModel(
+UserInfoDetailBaseModel _$UserInfoDetailBaseModelFromJson(
+        Map<String, dynamic> json) =>
+    UserInfoDetailBaseModel(
       id: json['id'] as String?,
       email: json['email'] as String?,
       name: json['name'] as String?,
@@ -46,9 +44,11 @@ LoginUserBaseModel _$LoginUserBaseModelFromJson(Map<String, dynamic> json) =>
       isPhoneActivated: json['isPhoneActivated'] as bool?,
       timezone: json['timezone'] as int?,
       canSendMessage: json['canSendMessage'] as bool?,
+      avgRating: (json['avgRating'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$LoginUserBaseModelToJson(LoginUserBaseModel instance) =>
+Map<String, dynamic> _$UserInfoDetailBaseModelToJson(
+        UserInfoDetailBaseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'email': instance.email,
@@ -66,28 +66,21 @@ Map<String, dynamic> _$LoginUserBaseModelToJson(LoginUserBaseModel instance) =>
       'isPhoneActivated': instance.isPhoneActivated,
       'timezone': instance.timezone,
       'canSendMessage': instance.canSendMessage,
+      'avgRating': instance.avgRating,
     };
 
 WalletInfoBaseModel _$WalletInfoBaseModelFromJson(Map<String, dynamic> json) =>
     WalletInfoBaseModel(
-      id: json['id'] as String?,
-      userId: json['userId'] as String?,
       amount: json['amount'] as String?,
       isBlocked: json['isBlocked'] as bool?,
-      createdAt: jsonToTime(json['createdAt'] as String?),
-      updatedAt: jsonToTime(json['updatedAt'] as String?),
       bonus: json['bonus'] as int?,
     );
 
 Map<String, dynamic> _$WalletInfoBaseModelToJson(
         WalletInfoBaseModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'userId': instance.userId,
       'amount': instance.amount,
       'isBlocked': instance.isBlocked,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
       'bonus': instance.bonus,
     };
 
@@ -105,33 +98,4 @@ Map<String, dynamic> _$LearnTopicsBaseModelToJson(
       'id': instance.id,
       'key': instance.key,
       'name': instance.name,
-    };
-
-TokensBaseModel _$TokensBaseModelFromJson(Map<String, dynamic> json) =>
-    TokensBaseModel(
-      access: json['access'] == null
-          ? null
-          : TokenItemBaseModel.fromJson(json['access'] as Map<String, dynamic>),
-      refresh: json['refresh'] == null
-          ? null
-          : TokenItemBaseModel.fromJson(
-              json['refresh'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$TokensBaseModelToJson(TokensBaseModel instance) =>
-    <String, dynamic>{
-      'access': instance.access,
-      'refresh': instance.refresh,
-    };
-
-TokenItemBaseModel _$TokenItemBaseModelFromJson(Map<String, dynamic> json) =>
-    TokenItemBaseModel(
-      token: json['token'] as String?,
-      expires: jsonToTime(json['expires'] as String?),
-    );
-
-Map<String, dynamic> _$TokenItemBaseModelToJson(TokenItemBaseModel instance) =>
-    <String, dynamic>{
-      'token': instance.token,
-      'expires': instance.expires?.toIso8601String(),
     };
