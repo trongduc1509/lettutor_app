@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:lettutor_app/feature/authentication/domain/enities/forgot_pass_entity.dart';
+import 'package:lettutor_app/feature/authentication/domain/usecases/forgot_password_usecase/forgot_password_params.usecase.dart';
 
 import '../../../../base/define/apigateway/exception/app_exception.dart';
 import '../enities/login_entity.dart';
@@ -16,6 +18,9 @@ abstract class AuthenticationRepository {
 
   Future<Either<AppException, LoginEntity>> registerEmailPassword(
       RegisterEmailPassUseCaseParams params);
+
+  Future<Either<AppException, ForgotPassEntity>> forgotPassword(
+      ForgotPassUseCaseParams params);
 
   TokenEntity? getAccessToken();
   TokenEntity? getRefreshToken();

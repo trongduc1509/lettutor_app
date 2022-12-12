@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:lettutor_app/feature/authentication/domain/enities/forgot_pass_entity.dart';
 import 'package:lettutor_app/feature/authentication/domain/enities/login_entity.dart';
+import 'package:lettutor_app/feature/authentication/domain/usecases/forgot_password_usecase/forgot_password_params.usecase.dart';
 import 'package:lettutor_app/feature/authentication/domain/usecases/register_with_email_pass_usecase/register_email_pass_params.usecase.dart';
 
 import '../../../../di/di_module.dart';
@@ -72,6 +74,25 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
           error: e,
           displayMessage: 'Lỗi đăng ký với email & mật khẩu',
           displayTitle: 'Error while register with email & password',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<AppException, ForgotPassEntity>> forgotPassword(
+      ForgotPassUseCaseParams params) async {
+    try {
+      var result = await authRemoteDatasource.forgotPassword(params);
+      return Right(result);
+    } on AppException catch (s) {
+      return Left(s);
+    } on Exception catch (e) {
+      return Left(
+        AppException(
+          error: e,
+          displayMessage: 'Lỗi gửi link reset mật khẩu',
+          displayTitle: 'Error while send reset password link',
         ),
       );
     }

@@ -1,6 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:lettutor_app/feature/authentication/data/datasource/auth/remote_data/model/forgot_password.model.dart';
+import 'package:lettutor_app/feature/authentication/data/datasource/auth/remote_data/resource/forgot_password_resource.dart';
 import 'package:lettutor_app/feature/authentication/data/datasource/auth/remote_data/resource/register_resource.dart';
+import 'package:lettutor_app/feature/authentication/domain/usecases/forgot_password_usecase/forgot_password_params.usecase.dart';
 import 'package:lettutor_app/feature/authentication/domain/usecases/register_with_email_pass_usecase/register_email_pass_params.usecase.dart';
 
 import '../../token/local_data/token_local_datasource.dart';
@@ -53,5 +56,15 @@ class AuthenticationRemoteDatasource {
       data: params.toJson(),
     );
     return RegisterBaseModel.fromJson(response.data);
+  }
+
+  Future<ForgotPassBaseModel> forgotPassword(
+      ForgotPassUseCaseParams params) async {
+    var response = await apiGateway.execute(
+      resource: const ForgotPassResource(),
+      method: HTTPMethod.post,
+      data: params.toJson(),
+    );
+    return ForgotPassBaseModel.fromJson(response.data);
   }
 }
