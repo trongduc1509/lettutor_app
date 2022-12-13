@@ -58,19 +58,25 @@ class _TeachersContentState extends State<TeachersContent> {
                             color: Colors.black,
                           ),
                           decoration: const InputDecoration(
-                              hintText: 'Search tutor',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: 4.0,
-                                horizontal: 0,
+                            hintText: 'Search tutor',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 4.0,
+                              horizontal: 0,
+                            ),
+                            prefixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
                               ),
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ))),
+                            ),
+                          ),
+                          onChanged: (value) =>
+                              context.read<TeachersBloc>().add(TeacherLoadEvent(
+                                    searchTxt: value,
+                                  )),
                         ),
                       ),
                       const SizedBox(
