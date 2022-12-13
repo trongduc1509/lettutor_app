@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor_app/base/theme/colors.dart';
-import 'package:lettutor_app/feature/teachers/teachers_list/entities/teacher_item.dart';
+import 'package:lettutor_app/feature/teachers/teachers_list/presentation/widgets/teacher_item.dart';
 import 'package:lettutor_app/shared/widgets/common_txt.dart';
 import 'package:lettutor_app/shared/widgets/date_picker.dart';
 
@@ -237,11 +237,11 @@ class _TeachersListPageState extends State<TeachersListPage> {
               const SizedBox(
                 height: 5.0,
               ),
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: List.generate(10, (index) => const TeacherItem()),
-              )
+              // ListView(
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   children: List.generate(10, (index) => const TeacherItem()),
+              // )
             ],
           ),
         ),

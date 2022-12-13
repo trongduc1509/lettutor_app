@@ -4,7 +4,7 @@ import '../courses/courses_list.dart';
 import '../history/history_list_page.dart';
 import '../schedule/schedule_list_page.dart';
 import '../profile/presentation/views/profile_page.dart';
-import '../teachers/teachers_list/teachers_list_page.dart';
+import '../teachers/teachers_list/presentation/views/teachers_page.dart';
 
 final GlobalKey<ScaffoldState> keyDrawerHomePage = GlobalKey();
 
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage>
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: const [
-          TeachersListPage(),
+          TeachersPage(),
           ScheduleListPage(),
           HistoryListPage(),
           CoursesList(),

@@ -13,6 +13,23 @@ import 'interceptors/refresh_token_interceptor.dart';
 
 enum HTTPMethod { get, post, put, delete, patch }
 
+extension HTTPMethodX on HTTPMethod {
+  String get mapToString {
+    switch (this) {
+      case HTTPMethod.get:
+        return 'GET';
+      case HTTPMethod.post:
+        return 'POST';
+      case HTTPMethod.put:
+        return 'PUT';
+      case HTTPMethod.delete:
+        return 'DELETE';
+      case HTTPMethod.patch:
+        return 'PATCH';
+    }
+  }
+}
+
 enum ApiType {
   public,
   user,
@@ -97,6 +114,26 @@ class ApiGateway {
         ]);
         break;
     }
+  }
+
+  Future<Response> executeFetch({
+    required Resource resource,
+    required HTTPMethod method,
+    dynamic data,
+    Map<String, dynamic>? params,
+    Function(int, int)? onSendProgress,
+    Function(int, int)? onReceivedProgress,
+    Options? options,
+  }) {
+    return _dioInstance.fetch(RequestOptions(
+      method: method.mapToString,
+      baseUrl: endpoint,
+      path: resource.path,
+      queryParameters: params,
+      data: data,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceivedProgress,
+    ));
   }
 
   Future<Response> execute({
