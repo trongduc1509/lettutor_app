@@ -16,6 +16,7 @@ class TeachersBloc extends Bloc<TeachersEvent, TeachersState> {
     add(
       const TeacherLoadEvent(
         searchTxt: '',
+        perPage: 50,
       ),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor_app/feature/teachers/teachers_list/domain/entities/teacher_list_entity.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../feature/authentication/presentation/views/forgot_password_view/forgot_password_page.dart';
 import '../../../feature/authentication/presentation/views/login_view/login_page.dart';
 import '../../../feature/authentication/presentation/views/register_view/register_page.dart';
 import '../../../feature/home/home_page.dart';
+import '../../../feature/teachers/detail/presentation/views/teacher_detail_page.dart';
 
 class NavigationService {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -32,5 +34,14 @@ class NavigationService {
   }) =>
       MaterialPageRoute(
         builder: (context) => const HomePage(),
+      );
+
+  static Route createTutorDetailRoute({
+    TutorItemEntity? tutor,
+  }) =>
+      MaterialPageRoute(
+        builder: (context) => TeacherDetailPage(
+          dataFromList: tutor,
+        ),
       );
 }

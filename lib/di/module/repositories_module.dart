@@ -5,6 +5,9 @@ import '../../feature/authentication/domain/repositories/authentication_reposito
 import '../../feature/profile/data/datasources/user_info/remote_data/user_info_remote_datasource.dart';
 import '../../feature/profile/data/repositories/profile_repository_impl.dart';
 import '../../feature/profile/domain/repositories/profile_repository.dart';
+import '../../feature/teachers/detail/data/datasources/teacher_detail/remote_data/teacher_detail_remote_datasource.dart';
+import '../../feature/teachers/detail/data/repositories/teacher_detail_repository_impl.dart';
+import '../../feature/teachers/detail/domain/repositories/teacher_detail_repository.dart';
 import '../../feature/teachers/teachers_list/data/datasources/teacher_list/remote_data/teacher_list_remote_datasource.dart';
 import '../../feature/teachers/teachers_list/data/repositories/teacher_list_repostitory_impl.dart';
 import '../../feature/teachers/teachers_list/domain/repositories/teachers_repository.dart';
@@ -27,11 +30,15 @@ class RepositoriesModule extends DIModule {
           () => UserInfoRemoteDatasource())
       ..registerLazySingleton<TeacherListRemoteDatasource>(
           () => TeacherListRemoteDatasource())
+      ..registerLazySingleton<TeacherDetailRemoteDatasource>(
+          () => TeacherDetailRemoteDatasource())
       ..registerLazySingleton<AuthenticationRepository>(
           () => AuthenticationRepositoryImpl())
       ..registerLazySingleton<UserRepository>(() => UserRepositoryImpl())
       ..registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl())
       ..registerLazySingleton<TeacherListRepository>(
-          () => TeacherListRepositoryImpl());
+          () => TeacherListRepositoryImpl())
+      ..registerLazySingleton<TeacherDetailRepository>(
+          () => TeacherDetailRepositoryImpl());
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lettutor_app/base/define/navigation/navigation.dart';
 
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
@@ -25,8 +26,9 @@ class TeacherItem extends StatelessWidget {
         vertical: 5.0,
       ),
       child: GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const TeacherDetailPage(),
+        onTap: () =>
+            Navigator.of(context).push(NavigationService.createTutorDetailRoute(
+          tutor: tutor,
         )),
         behavior: HitTestBehavior.opaque,
         child: Container(
