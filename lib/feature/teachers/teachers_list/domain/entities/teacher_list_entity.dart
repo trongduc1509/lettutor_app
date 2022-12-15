@@ -1,3 +1,5 @@
+import '../../../../../base/extension/time.dart';
+
 class TeacherTotalEntity {
   final TutorsListEntity? tutors;
   final List<TutorFavEntity>? favoriteTutor;
@@ -142,6 +144,9 @@ class TutorItemFeedbackEntity {
     this.updatedAt,
     this.firstInfo,
   });
+
+  String getUpdatedAt({required bool containTime}) =>
+      updatedAt?.convertDateByFormat(containTime: containTime) ?? '';
 }
 
 class TutorItemFeedbackFirstInfoEntity {

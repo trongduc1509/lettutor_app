@@ -19,6 +19,8 @@ class TeacherDetailPage extends StatelessWidget {
           ..add(TeacherDetailLoadEvent(
             teacherId: dataFromList?.userId ?? '',
           )),
-        child: const TeacherDetailContent(),
+        child: TeacherDetailContent(
+          dataFromList: dataFromList,
+        ),
       );
 }

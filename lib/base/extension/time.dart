@@ -24,8 +24,11 @@ DateTime get endDay => DateTime(
     DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);
 
 extension DateTimeParse on DateTime {
-  String convertDate(String dateFormat) {
+  String convertDate(String? dateFormat) {
     final docDateTime = DateTime.parse(toString());
     return DateFormat(dateFormat).format(docDateTime);
   }
+
+  String convertDateByFormat({required bool containTime}) =>
+      convertDate(containTime ? "dd/MM/yyyy HH:mm" : 'dd/MM/yyyy');
 }

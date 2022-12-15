@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lettutor_app/feature/teachers/widgets/teacher_review_modal.dart';
 
 import '../../../../../base/define/style/default_style.dart';
 import '../../../../../base/theme/colors.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
-import '../../../../../shared/widgets/date_picker.dart';
 import '../../../../courses/detail/course_detail_page.dart';
 import '../../../teachers_list/domain/entities/teacher_list_entity.dart';
 import '../../../widgets/teacher_tag.dart';
@@ -205,7 +205,16 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () async {
+                                print(widget.dataFromList?.feedbacks?.length);
+                                await showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => TeacherReviewsModal(
+                                    feedbacks:
+                                        widget.dataFromList?.feedbacks ?? [],
+                                  ),
+                                );
+                              },
                               behavior: HitTestBehavior.opaque,
                               child: Column(
                                 children: const [
@@ -282,36 +291,35 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                         const SizedBox(
                           height: 5.0,
                         ),
-                        ListView(
-                          shrinkWrap: true,
-                          children: List.generate(
-                              2,
-                              (index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4.0,
-                                      horizontal: 8.0,
-                                    ),
-                                    child: GestureDetector(
-                                      onTap: () => Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CourseDetailPage(),
-                                      )),
-                                      behavior: HitTestBehavior.opaque,
-                                      child: Text(
-                                        'Life in the Internet Age',
-                                        style: DefaultStyle()
-                                            .t16Medium
-                                            .copyWith(
-                                              color: AppColor().blueLightTxt,
-                                            ),
+                        if (state.data.user?.courses?.isNotEmpty ?? false) ...[
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state.data.user!.courses!.length,
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 4.0,
+                                horizontal: 8.0,
+                              ),
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CourseDetailPage(),
+                                )),
+                                behavior: HitTestBehavior.opaque,
+                                child: Text(
+                                  state.data.user!.courses![index].name ?? '',
+                                  style: DefaultStyle().t16Medium.copyWith(
+                                        color: AppColor().blueLightTxt,
                                       ),
-                                    ),
-                                  )),
-                        ),
-                        const SizedBox(
-                          height: 15.0,
-                        ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15.0,
+                          ),
+                        ],
                         if (state.data.interests != null) ...[
                           Text(
                             'Interests',
@@ -354,24 +362,24 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                             height: 15.0,
                           ),
                         ],
-                        Text(
-                          'Booking Section',
-                          style: DefaultStyle().t20Medium,
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        DatePickerView(
-                          date: bookedDate,
-                          active: true,
-                          title: 'Select a day',
-                          onDateChosen: (chosenDate) {
-                            setState(() {
-                              bookedDate = chosenDate;
-                            });
-                          },
-                          isTo: true,
-                        ),
+                        // Text(
+                        //   'Booking Section',
+                        //   style: DefaultStyle().t20Medium,
+                        // ),
+                        // const SizedBox(
+                        //   height: 10.0,
+                        // ),
+                        // DatePickerView(
+                        //   date: bookedDate,
+                        //   active: true,
+                        //   title: 'Select a day',
+                        //   onDateChosen: (chosenDate) {
+                        //     setState(() {
+                        //       bookedDate = chosenDate;
+                        //     });
+                        //   },
+                        //   isTo: true,
+                        // ),
                       ],
                     ),
                   ),

@@ -5,7 +5,6 @@ import 'package:lettutor_app/base/define/navigation/navigation.dart';
 
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
-import '../../../detail/teacher_detail_page.dart';
 import '../../../widgets/teacher_tag.dart';
 import '../../domain/entities/teacher_list_entity.dart';
 
