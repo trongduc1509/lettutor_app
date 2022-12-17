@@ -1,3 +1,7 @@
+import 'package:lettutor_app/feature/courses/courses_list/data/datasources/courses_list/remote_data/courses_list_remote_datasource.dart';
+import 'package:lettutor_app/feature/courses/courses_list/data/repositories/courses_list_repository_impl.dart';
+import 'package:lettutor_app/feature/courses/courses_list/domain/repositories/courses_list_repository.dart';
+
 import '../../feature/authentication/data/datasource/auth/remote_data/auth_remote_datasource.dart';
 import '../../feature/authentication/data/datasource/token/local_data/token_local_datasource.dart';
 import '../../feature/authentication/data/repositories/authentication_repository_impl.dart';
@@ -32,6 +36,8 @@ class RepositoriesModule extends DIModule {
           () => TeacherListRemoteDatasource())
       ..registerLazySingleton<TeacherDetailRemoteDatasource>(
           () => TeacherDetailRemoteDatasource())
+      ..registerLazySingleton<CoursesListRemoteDatasource>(
+          () => CoursesListRemoteDatasource())
       ..registerLazySingleton<AuthenticationRepository>(
           () => AuthenticationRepositoryImpl())
       ..registerLazySingleton<UserRepository>(() => UserRepositoryImpl())
@@ -39,6 +45,8 @@ class RepositoriesModule extends DIModule {
       ..registerLazySingleton<TeacherListRepository>(
           () => TeacherListRepositoryImpl())
       ..registerLazySingleton<TeacherDetailRepository>(
-          () => TeacherDetailRepositoryImpl());
+          () => TeacherDetailRepositoryImpl())
+      ..registerLazySingleton<CoursesListRepository>(
+          () => CoursesListRepositoryImpl());
   }
 }

@@ -64,6 +64,7 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
             builder: (context, state) {
               if (state is TeacherDetailLoadDoneState) {
                 return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16.0,

@@ -1,8 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor_app/feature/courses/courses_list/domain/entities/courses_list_entity.dart';
 import 'package:lettutor_app/feature/courses/detail/course_detail_page.dart';
 
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../shared/widgets/custom_shimmer.dart';
+
 class CourseItem extends StatelessWidget {
-  const CourseItem({Key? key}) : super(key: key);
+  const CourseItem({
+    Key? key,
+    required this.courseItem,
+  }) : super(key: key);
+
+  final CourseEntity courseItem;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +30,24 @@ class CourseItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/images/temp_course_item.png',
+            CachedNetworkImage(
+              imageUrl: courseItem.imageUrl ?? '',
               height: 100,
+              placeholder: (context, url) => MyShimmer.shimmerBuilder(
+                child: Container(
+                  color: Colors.white,
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      Assets.images.tempCourseItem.path,
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               width: 15.0,
@@ -34,32 +59,33 @@ class CourseItem extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Life in the Internet Age',
+                      courseItem.name ?? '',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5.0,
                     ),
                     Text(
-                      "Let's discuss how technology is changing the way we live",
+                      courseItem.description ?? '',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15.0,
                     ),
-                    Text('Intermediate • 9 Lessons'),
+                    Text(
+                        'Level ${courseItem.level} • ${courseItem.topics.length} Topics'),
                   ],
                 ),
               ),

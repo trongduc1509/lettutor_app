@@ -252,7 +252,7 @@ class _TeachersContentState extends State<TeachersContent> {
                       }
                       return const Center(
                         child: Text(
-                          'Error while loading profile data...',
+                          'Error while loading tutors list...',
                         ),
                       );
                     },

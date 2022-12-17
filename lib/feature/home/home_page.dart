@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../courses/courses_list.dart';
+import '../courses/courses_list/presentation/views/courses_list_page.dart';
 import '../history/history_list_page.dart';
 import '../schedule/schedule_list_page.dart';
 import '../profile/presentation/views/profile_page.dart';
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage>
           TeachersPage(),
           ScheduleListPage(),
           HistoryListPage(),
-          CoursesList(),
+          CoursesListPage(),
           ProfilePage(),
         ],
       ),
