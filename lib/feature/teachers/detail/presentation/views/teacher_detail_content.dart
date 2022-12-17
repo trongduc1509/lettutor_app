@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:lettutor_app/feature/teachers/widgets/teacher_review_modal.dart';
 
+import '../../../../../base/define/navigation/navigation.dart';
 import '../../../../../base/define/style/default_style.dart';
 import '../../../../../base/theme/colors.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
-import '../../../../courses/detail/course_detail_page.dart';
 import '../../../teachers_list/domain/entities/teacher_list_entity.dart';
+import '../../../widgets/teacher_review_modal.dart';
 import '../../../widgets/teacher_tag.dart';
 import '../blocs/teacher_detail_bloc/teacher_detail_bloc.dart';
 
@@ -302,11 +302,13 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                                 horizontal: 8.0,
                               ),
                               child: GestureDetector(
-                                onTap: () => Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CourseDetailPage(),
-                                )),
+                                onTap: () => Navigator.of(context).push(
+                                  NavigationService.createCourseDetailRoute(
+                                    courseId:
+                                        state.data.user?.courses?[index].id ??
+                                            '',
+                                  ),
+                                ),
                                 behavior: HitTestBehavior.opaque,
                                 child: Text(
                                   state.data.user!.courses![index].name ?? '',

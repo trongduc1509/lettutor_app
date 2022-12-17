@@ -5,6 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import '../../../feature/authentication/presentation/views/forgot_password_view/forgot_password_page.dart';
 import '../../../feature/authentication/presentation/views/login_view/login_page.dart';
 import '../../../feature/authentication/presentation/views/register_view/register_page.dart';
+import '../../../feature/courses/detail/presentation/views/course_detail_page.dart';
 import '../../../feature/home/home_page.dart';
 import '../../../feature/teachers/detail/presentation/views/teacher_detail_page.dart';
 
@@ -42,6 +43,15 @@ class NavigationService {
       MaterialPageRoute(
         builder: (context) => TeacherDetailPage(
           dataFromList: tutor,
+        ),
+      );
+
+  static Route createCourseDetailRoute({
+    required String courseId,
+  }) =>
+      MaterialPageRoute(
+        builder: (context) => CourseDetailPage(
+          courseId: courseId,
         ),
       );
 }

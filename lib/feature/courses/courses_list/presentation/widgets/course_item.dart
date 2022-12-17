@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/feature/courses/courses_list/domain/entities/courses_list_entity.dart';
-import 'package:lettutor_app/feature/courses/detail/course_detail_page.dart';
 
+import '../../../../../base/define/navigation/navigation.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
+import '../../domain/entities/courses_list_entity.dart';
 
 class CourseItem extends StatelessWidget {
   const CourseItem({
@@ -18,7 +18,10 @@ class CourseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const CourseDetailPage())),
+        NavigationService.createCourseDetailRoute(
+          courseId: courseItem.id ?? '',
+        ),
+      ),
       behavior: HitTestBehavior.opaque,
       child: Container(
         decoration: BoxDecoration(

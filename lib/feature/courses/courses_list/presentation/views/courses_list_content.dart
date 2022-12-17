@@ -32,7 +32,7 @@ class _CoursesListContentState extends State<CoursesListContent> {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/images/courses.png',
+                      Assets.images.courses.path,
                       width: MediaQuery.of(context).size.width * 1 / 4,
                     ),
                     const SizedBox(
