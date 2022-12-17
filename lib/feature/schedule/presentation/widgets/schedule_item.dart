@@ -1,9 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor_app/base/extension/time.dart';
 import 'package:lettutor_app/base/theme/colors.dart';
+import 'package:lettutor_app/feature/schedule/domain/entities/schedule_entity.dart';
 import 'package:lettutor_app/shared/widgets/expansion_panel.dart';
 
+import '../../../../gen/assets.gen.dart';
+import '../../../../shared/widgets/custom_shimmer.dart';
+
 class ScheduleItem extends StatelessWidget {
-  const ScheduleItem({Key? key}) : super(key: key);
+  const ScheduleItem({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final ScheduleEntity item;
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +32,25 @@ class ScheduleItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sun, 23 Oct 22',
+                item.scheduleDetailInfo?.scheduleInfo?.date!
+                        .convertDateByFormat(containTime: false) ??
+                    '',
                 style: TextStyle(
                   color: AppColor().blackTitle,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              Text(
-                '2 consecutive lessons',
-                style: TextStyle(
-                  color: AppColor().blackTitle,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              // const SizedBox(
+              //   height: 5.0,
+              // ),
+              // Text(
+              //   '2 consecutive lessons',
+              //   style: TextStyle(
+              //     color: AppColor().blackTitle,
+              //     fontWeight: FontWeight.w400,
+              //   ),
+              // ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -51,14 +64,24 @@ class ScheduleItem extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Container(
+                      child: CachedNetworkImage(
                         height: 80,
                         width: 80,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image:
-                                    AssetImage('assets/images/blank_ava.jpg'))),
+                        imageUrl: item.scheduleDetailInfo?.scheduleInfo
+                                ?.tutorInfo?.avatar ??
+                            '',
+                        placeholder: (context, url) => MyShimmer.shimmerBuilder(
+                          child: Container(
+                            color: Colors.white,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image:
+                                      AssetImage(Assets.images.blankAva.path))),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -68,20 +91,24 @@ class ScheduleItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Keeganfhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+                          Text(
+                            item.scheduleDetailInfo?.scheduleInfo?.tutorInfo
+                                    ?.name ??
+                                '',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18.0, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(
                             height: 5.0,
                           ),
-                          const Text(
-                            'France',
-                            style: TextStyle(
+                          Text(
+                            item.scheduleDetailInfo?.scheduleInfo?.tutorInfo
+                                    ?.country ??
+                                '',
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -118,35 +145,35 @@ class ScheduleItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Lesson Time: 09:30 - 10:25',
+                      'Lesson Time: ${item.scheduleDetailInfo?.startPeriod ?? ''} - ${item.scheduleDetailInfo?.endPeriod ?? ''}',
                       style: TextStyle(
                         color: AppColor().blackTitle,
                         fontSize: 18.0,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      'Session 1: 09:30 - 09:55',
-                      style: TextStyle(
-                        color: AppColor().blackTitle,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      'Session 2: 10:00 - 10:25',
-                      style: TextStyle(
-                        color: AppColor().blackTitle,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    // const SizedBox(
+                    //   height: 10.0,
+                    // ),
+                    // Text(
+                    //   'Session 1: 09:30 - 09:55',
+                    //   style: TextStyle(
+                    //     color: AppColor().blackTitle,
+                    //     fontSize: 15.0,
+                    //     fontWeight: FontWeight.w400,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 10.0,
+                    // ),
+                    // Text(
+                    //   'Session 2: 10:00 - 10:25',
+                    //   style: TextStyle(
+                    //     color: AppColor().blackTitle,
+                    //     fontSize: 15.0,
+                    //     fontWeight: FontWeight.w400,
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 10.0,
                     ),
@@ -157,13 +184,12 @@ class ScheduleItem extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.circular(4.0),
                       ),
-                      child: const ExpandablePanel(
-                          title: 'Request for lesson',
-                          items: [
-                            ExpandableModel(
-                                title:
-                                    'Currently there are no requests for this class. Please write down any requests for the teacher.')
-                          ]),
+                      child:
+                          ExpandablePanel(title: 'Request for lesson', items: [
+                        ExpandableModel(
+                            title: item.studentRequest ??
+                                'Currently there are no requests for this class. Please write down any requests for the teacher.')
+                      ]),
                     )
                   ],
                 ),

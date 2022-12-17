@@ -6,9 +6,9 @@ import 'package:lettutor_app/gen/assets.gen.dart';
 
 import '../../../../shared/widgets/bottom_bar.dart';
 import '../../../courses/courses_list/presentation/views/courses_list_page.dart';
-import '../../../history/history_list_page.dart';
+import '../../../history/presentation/views/history_page.dart';
 import '../../../profile/presentation/views/profile_page.dart';
-import '../../../schedule/schedule_list_page.dart';
+import '../../../schedule/presentation/views/schedule_list_page.dart';
 import '../../../teachers/teachers_list/teachers_list_page.dart';
 
 final GlobalKey<ScaffoldState> _keyDrawerHome = GlobalKey();
@@ -80,7 +80,7 @@ class _HomeContentState extends State<HomeContent>
             children: const [
               TeachersListPage(),
               ScheduleListPage(),
-              HistoryListPage(),
+              HistoryPage(),
               CoursesListPage(),
               ProfilePage(),
             ],

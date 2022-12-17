@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../courses/courses_list/presentation/views/courses_list_page.dart';
-import '../history/history_list_page.dart';
-import '../schedule/schedule_list_page.dart';
+import '../history/presentation/views/history_page.dart';
+import '../schedule/presentation/views/schedule_list_page.dart';
 import '../profile/presentation/views/profile_page.dart';
 import '../teachers/teachers_list/presentation/views/teachers_page.dart';
 
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage>
         children: const [
           TeachersPage(),
           ScheduleListPage(),
-          HistoryListPage(),
+          HistoryPage(),
           CoursesListPage(),
           ProfilePage(),
         ],
