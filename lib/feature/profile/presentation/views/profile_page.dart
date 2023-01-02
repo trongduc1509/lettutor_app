@@ -11,7 +11,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _profileBloc = ProfileBloc();
     return BlocProvider(
-      create: (context) => _profileBloc,
+      create: (context) => _profileBloc..add(const ProfileInitEvent()),
       child: ProfileContent(
         profileBloc: _profileBloc,
       ),

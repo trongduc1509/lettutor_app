@@ -22,4 +22,13 @@ class UserInfoRemoteDatasource {
     );
     return UserInfoBaseModel.fromJson(response.data);
   }
+
+  Future<UserInfoBaseModel> updateUserInfo(Map<String, dynamic> body) async {
+    var response = await apiGateway.execute(
+      resource: const UserInfoResource(),
+      method: HTTPMethod.put,
+      data: body,
+    );
+    return UserInfoBaseModel.fromJson(response.data);
+  }
 }

@@ -14,6 +14,12 @@ String? timeToJson(DateTime? date) {
   // return time.toLocal();
 }
 
+String? timeToJsonWithoutTime(DateTime? date) {
+  if (date == null) return null;
+  var time = date.convertDate("yyyy-MM-dd");
+  return time;
+}
+
 DateTime get startDay => DateTime(DateTime.now().year, DateTime.now().month,
             DateTime.now().day, 00, 00, 00)
         .subtract(const Duration(

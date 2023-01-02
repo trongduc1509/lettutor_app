@@ -68,6 +68,7 @@ class UserInfoDetailBaseModel extends UserInfoEntity {
           userPhone: phone,
           userDob: birthday,
           userImg: avatar,
+          userLevel: level,
         );
 
   static UserInfoDetailBaseModel fromJson(Map<String, dynamic> json) =>

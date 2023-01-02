@@ -6,6 +6,7 @@ class UserInfoEntity {
   final String? userPhone;
   final DateTime? userDob;
   final String? userImg;
+  final String? userLevel;
 
   const UserInfoEntity({
     this.userId = '',
@@ -15,5 +16,6 @@ class UserInfoEntity {
     this.userPhone = '',
     this.userDob,
     this.userImg = '',
+    this.userLevel = '',
   });
 }

@@ -29,4 +29,23 @@ class ProfileRepositoryImpl extends ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<Either<AppException, UserInfoEntity>> updateUserInfo(
+      Map<String, dynamic> params) async {
+    try {
+      final result = await userInfoRemoteDatasource.updateUserInfo(params);
+      return Right(result.user ?? const UserInfoEntity());
+    } on AppException catch (s) {
+      return Left(s);
+    } on Exception catch (e) {
+      return Left(
+        AppException(
+          error: e,
+          displayMessage: 'Lỗi cập nhật thông tin user',
+          displayTitle: 'Error while updating user information',
+        ),
+      );
+    }
+  }
 }

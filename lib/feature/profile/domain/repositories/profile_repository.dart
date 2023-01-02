@@ -5,4 +5,7 @@ import '../entities/user_info_entity.dart';
 
 abstract class ProfileRepository {
   Future<Either<AppException, UserInfoEntity>> getUserInfo();
+
+  Future<Either<AppException, UserInfoEntity>> updateUserInfo(
+      Map<String, dynamic> params);
 }
