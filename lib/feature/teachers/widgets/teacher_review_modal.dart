@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/feature/teachers/widgets/teacher_review.dart';
-
-import '../teachers_list/domain/entities/teacher_list_entity.dart';
+import '../teachers_list/domain/entities/teacher_list_get_entity.dart';
+import 'teacher_review.dart';
 
 class TeacherReviewsModal extends StatelessWidget {
   const TeacherReviewsModal({

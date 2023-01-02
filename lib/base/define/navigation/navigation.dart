@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/feature/teachers/teachers_list/domain/entities/teacher_list_entity.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../feature/authentication/presentation/views/forgot_password_view/forgot_password_page.dart';
@@ -8,6 +7,7 @@ import '../../../feature/authentication/presentation/views/register_view/registe
 import '../../../feature/courses/detail/presentation/views/course_detail_page.dart';
 import '../../../feature/home/home_page.dart';
 import '../../../feature/teachers/detail/presentation/views/teacher_detail_page.dart';
+import '../../../feature/teachers/teachers_list/domain/entities/teacher_list_get_entity.dart';
 
 class NavigationService {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -38,11 +38,11 @@ class NavigationService {
       );
 
   static Route createTutorDetailRoute({
-    TutorItemEntity? tutor,
+    TutorItemGetEntity? tutor,
   }) =>
       MaterialPageRoute(
         builder: (context) => TeacherDetailPage(
-          dataFromList: tutor,
+          dataReviewFromList: tutor,
         ),
       );
 

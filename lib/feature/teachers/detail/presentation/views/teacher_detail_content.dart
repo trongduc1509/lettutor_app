@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lettutor_app/feature/teachers/teachers_list/presentation/blocs/teachers_bloc/teachers_bloc.dart';
 
 import '../../../../../base/define/navigation/navigation.dart';
 import '../../../../../base/define/style/default_style.dart';
 import '../../../../../base/theme/colors.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
-import '../../../teachers_list/domain/entities/teacher_list_entity.dart';
+import '../../../teachers_list/domain/entities/teacher_list_get_entity.dart';
 import '../../../widgets/teacher_review_modal.dart';
 import '../../../widgets/teacher_tag.dart';
 import '../blocs/teacher_detail_bloc/teacher_detail_bloc.dart';
@@ -17,10 +18,10 @@ import '../blocs/teacher_detail_bloc/teacher_detail_bloc.dart';
 class TeacherDetailContent extends StatefulWidget {
   const TeacherDetailContent({
     Key? key,
-    this.dataFromList,
+    this.dataReviewFromList,
   }) : super(key: key);
 
-  final TutorItemEntity? dataFromList;
+  final TutorItemGetEntity? dataReviewFromList;
 
   @override
   State<TeacherDetailContent> createState() => _TeacherDetailContentState();
@@ -160,7 +161,13 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                context.read<TeacherDetailBloc>().add(
+                                      TeacherUpdateFavEvent(
+                                        teacherId: state.data.user?.id ?? '',
+                                      ),
+                                    );
+                              },
                               behavior: HitTestBehavior.opaque,
                               child: Column(
                                 children: [
@@ -207,12 +214,15 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                print(widget.dataFromList?.feedbacks?.length);
+                                print(widget
+                                    .dataReviewFromList?.feedbacks?.length);
                                 await showModalBottomSheet(
                                   context: context,
                                   builder: (context) => TeacherReviewsModal(
-                                    feedbacks:
-                                        widget.dataFromList?.feedbacks ?? [],
+                                    feedbacks: widget.dataReviewFromList
+                                            ?.feedbacks?.reversed
+                                            .toList() ??
+                                        [],
                                   ),
                                 );
                               },

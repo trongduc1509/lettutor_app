@@ -5,7 +5,7 @@ import 'package:lettutor_app/base/define/style/default_style.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../shared/widgets/custom_shimmer.dart';
-import '../teachers_list/domain/entities/teacher_list_entity.dart';
+import '../teachers_list/domain/entities/teacher_list_get_entity.dart';
 
 class TeacherReviewWidget extends StatelessWidget {
   const TeacherReviewWidget({

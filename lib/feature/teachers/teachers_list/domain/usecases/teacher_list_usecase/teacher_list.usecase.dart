@@ -3,19 +3,19 @@ import 'package:lettutor_app/feature/teachers/teachers_list/domain/repositories/
 
 import '../../../../../../base/define/apigateway/exception/app_exception.dart';
 import '../../../../../../base/define/usecase/usecase.base.dart';
-import '../../entities/teacher_list_entity.dart';
+import '../../entities/teacher_list_get_entity.dart';
 import 'teacher_list_params.usecase.dart';
 
 class TeacherListUseCase
     with
         UseCase<TeacherListUseCaseParams,
-            Either<AppException, TeacherTotalEntity>> {
+            Either<AppException, TeacherTotalGetEntity>> {
   const TeacherListUseCase(this._teacherListRepository);
 
   final TeacherListRepository _teacherListRepository;
 
   @override
-  Future<Either<AppException, TeacherTotalEntity>> execute(
+  Future<Either<AppException, TeacherTotalGetEntity>> execute(
           TeacherListUseCaseParams params) =>
       _teacherListRepository.getTeacherList(
         {

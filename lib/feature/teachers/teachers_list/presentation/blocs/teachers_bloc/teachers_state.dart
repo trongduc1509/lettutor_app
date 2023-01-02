@@ -14,16 +14,20 @@ class TeachersLoadingState extends TeachersState {
 
 class TeachersLoadDoneState extends TeachersState {
   const TeachersLoadDoneState({
+    required this.tutorsReviewsList,
     required this.tutorsList,
     this.searchTxt = '',
     this.perPage = 10,
     this.page = 1,
+    this.isVietnamese = false,
   });
 
+  final TeacherTotalGetEntity tutorsReviewsList;
   final TeacherTotalEntity tutorsList;
   final String searchTxt;
   final int perPage;
   final int page;
+  final bool isVietnamese;
 }
 
 class TeachersLoadErrorState extends TeachersState {

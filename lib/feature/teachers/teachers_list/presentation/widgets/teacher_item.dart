@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor_app/base/define/navigation/navigation.dart';
+import 'package:lettutor_app/feature/teachers/teachers_list/domain/entities/teacher_list_get_entity.dart';
+import 'package:lettutor_app/feature/teachers/teachers_list/presentation/blocs/teachers_bloc/teachers_bloc.dart';
 
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
@@ -12,11 +15,19 @@ class TeacherItem extends StatelessWidget {
   const TeacherItem({
     Key? key,
     required this.tutor,
+    required this.tutorReview,
     this.isFav = false,
+    this.searchTxt = "",
+    this.perPage = 10,
+    this.isVietnamese = false,
   }) : super(key: key);
 
   final TutorItemEntity tutor;
+  final TutorItemGetEntity tutorReview;
   final bool isFav;
+  final String searchTxt;
+  final int perPage;
+  final bool isVietnamese;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +36,17 @@ class TeacherItem extends StatelessWidget {
         vertical: 5.0,
       ),
       child: GestureDetector(
-        onTap: () =>
-            Navigator.of(context).push(NavigationService.createTutorDetailRoute(
-          tutor: tutor,
-        )),
+        onTap: () async {
+          await Navigator.of(context)
+              .push(NavigationService.createTutorDetailRoute(
+            tutor: tutorReview,
+          ));
+          context.read<TeachersBloc>().add(TeacherLoadEvent(
+                searchTxt: searchTxt,
+                perPage: perPage,
+                isVietnamese: isVietnamese,
+              ));
+        },
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -126,7 +144,14 @@ class TeacherItem extends StatelessWidget {
                   ),
                   IconButton(
                     constraints: const BoxConstraints(),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<TeachersBloc>().add(TeacherFavUpdateEvent(
+                            searchTxt: searchTxt,
+                            tutorId: tutor.userId ?? '',
+                            perPage: perPage,
+                            isVietnamese: isVietnamese,
+                          ));
+                    },
                     icon: Icon(
                       isFav ? Icons.favorite : Icons.favorite_outline,
                       color: Colors.blue,
