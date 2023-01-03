@@ -2,12 +2,12 @@ import 'package:custom_state/custom_state.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lettutor_app/base/define/navigation/navigation.dart';
-import 'package:lettutor_app/base/define/text.dart';
-import 'package:lettutor_app/feature/authentication/presentation/blocs/login_bloc/login_bloc.dart';
-import 'package:lettutor_app/shared/widgets/progress_button.dart';
 
+import '../../../../../base/define/navigation/navigation.dart';
+import '../../../../../base/define/text.dart';
 import '../../../../../gen/assets.gen.dart';
+import '../../../../../shared/widgets/progress_button.dart';
+import '../../blocs/login_bloc/login_bloc.dart';
 
 class LoginContent extends StatefulWidget {
   const LoginContent({Key? key}) : super(key: key);

@@ -9,6 +9,7 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../shared/widgets/custom_shimmer.dart';
 import '../../../../shared/widgets/date_picker.dart';
 import '../blocs/profile_bloc/profile_bloc.dart';
+import 'change_password_page.dart';
 
 class ProfileContent extends StatefulWidget {
   const ProfileContent({
@@ -472,12 +473,13 @@ class _ProfileContentState extends State<ProfileContent> {
                             children: [
                               ElevatedButton(
                                   onPressed: () {
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         const BecomeTeacherPage(),
-                                    //   ));
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ChangePasswordPage(),
+                                    ));
                                   },
-                                  child: const Text('Become a tutor')),
+                                  child: const Text('Change password')),
                               ElevatedButton(
                                   onPressed: () {
                                     context.read<ProfileBloc>().add(

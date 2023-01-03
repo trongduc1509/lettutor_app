@@ -1,10 +1,9 @@
-import 'package:lettutor_app/feature/profile/data/datasources/user_info/remote_data/model/user_info_model.dart';
-import 'package:lettutor_app/feature/user/data/datasources/user/remote_data/resource/user_info_resource.dart';
-
 import '../../../../../../base/define/apigateway/api_gateway.dart';
 import '../../../../../../config/app_config.dart';
-import '../../../../../authentication/data/datasource/token/local_data/token_local_datasource.dart';
 import '../../../../../../di/di_module.dart';
+import '../../../../../authentication/data/datasource/token/local_data/token_local_datasource.dart';
+import '../../../../../user/data/datasources/user/remote_data/resource/user_info_resource.dart';
+import 'model/user_info_model.dart';
 
 class UserInfoRemoteDatasource {
   UserInfoRemoteDatasource();

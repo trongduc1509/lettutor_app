@@ -1,7 +1,3 @@
-import 'package:lettutor_app/feature/schedule/data/datasource/schedule/remote_data/schedule_remote_datasource.dart';
-import 'package:lettutor_app/feature/schedule/data/repositories/schedule_repository_impl.dart';
-import 'package:lettutor_app/feature/schedule/domain/repositories/schedule_repository.dart';
-
 import '../../feature/authentication/data/datasource/auth/remote_data/auth_remote_datasource.dart';
 import '../../feature/authentication/data/datasource/token/local_data/token_local_datasource.dart';
 import '../../feature/authentication/data/repositories/authentication_repository_impl.dart';
@@ -12,9 +8,13 @@ import '../../feature/courses/courses_list/domain/repositories/courses_list_repo
 import '../../feature/courses/detail/data/datasources/course_detail/remote_data/course_detail_remote_datasource.dart';
 import '../../feature/courses/detail/data/repositories/course_detail_repository_impl.dart';
 import '../../feature/courses/detail/domain/repositories/course_detail_repository.dart';
+import '../../feature/profile/data/datasources/change_pass/remote_data/change_pass_remote_datasource.dart';
 import '../../feature/profile/data/datasources/user_info/remote_data/user_info_remote_datasource.dart';
 import '../../feature/profile/data/repositories/profile_repository_impl.dart';
 import '../../feature/profile/domain/repositories/profile_repository.dart';
+import '../../feature/schedule/data/datasource/schedule/remote_data/schedule_remote_datasource.dart';
+import '../../feature/schedule/data/repositories/schedule_repository_impl.dart';
+import '../../feature/schedule/domain/repositories/schedule_repository.dart';
 import '../../feature/teachers/detail/data/datasources/teacher_detail/remote_data/teacher_detail_remote_datasource.dart';
 import '../../feature/teachers/detail/data/repositories/teacher_detail_repository_impl.dart';
 import '../../feature/teachers/detail/domain/repositories/teacher_detail_repository.dart';
@@ -38,6 +38,8 @@ class RepositoriesModule extends DIModule {
           () => UserRemoteDatasource())
       ..registerLazySingleton<UserInfoRemoteDatasource>(
           () => UserInfoRemoteDatasource())
+      ..registerLazySingleton<ChangePassRemoteDatasource>(
+          () => ChangePassRemoteDatasource())
       ..registerLazySingleton<TeacherListRemoteDatasource>(
           () => TeacherListRemoteDatasource())
       ..registerLazySingleton<TeacherDetailRemoteDatasource>(
