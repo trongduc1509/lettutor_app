@@ -8,8 +8,18 @@ class TeachersPage extends StatelessWidget {
   const TeachersPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocProvider<TeachersBloc>(
-        create: (context) => TeachersBloc(),
-        child: const TeachersContent(),
-      );
+  Widget build(BuildContext context) {
+    final teacherBloc = TeachersBloc();
+    return BlocProvider<TeachersBloc>(
+      create: (context) => teacherBloc
+        ..add(
+          const TeacherLoadEvent(
+            searchTxt: '',
+          ),
+        ),
+      child: TeachersContent(
+        bloc: teacherBloc,
+      ),
+    );
+  }
 }

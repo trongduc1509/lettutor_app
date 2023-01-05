@@ -8,7 +8,12 @@ import '../blocs/courses_list_bloc/courses_list_bloc.dart';
 import '../widgets/course_item.dart';
 
 class CoursesListContent extends StatefulWidget {
-  const CoursesListContent({Key? key}) : super(key: key);
+  const CoursesListContent({
+    Key? key,
+    required this.bloc,
+  }) : super(key: key);
+
+  final CoursesListBloc bloc;
 
   @override
   State<CoursesListContent> createState() => _CoursesListContentState();
@@ -16,6 +21,32 @@ class CoursesListContent extends StatefulWidget {
 
 class _CoursesListContentState extends State<CoursesListContent> {
   final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge) {
+        var isTop = _scrollController.position.pixels == 0;
+        if (!isTop) {
+          var state = widget.bloc.state;
+          if (state is CoursesListLoadDoneState) {
+            if (state.coursesList.data?.rows.isNotEmpty ?? false) {
+              if (state.size <= (state.coursesList.data?.count ?? 0)) {
+                widget.bloc.add(
+                  CoursesListLoadEvent(
+                    searchTxt: state.searchTxt,
+                    size: state.size + 6,
+                  ),
+                );
+              }
+            }
+          }
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) =>
@@ -64,20 +95,31 @@ class _CoursesListContentState extends State<CoursesListContent> {
                                       color: Colors.black,
                                     ),
                                     decoration: const InputDecoration(
-                                        hintText: 'Search courses',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 4.0,
-                                          horizontal: 0,
+                                      hintText: 'Search courses',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 4.0,
+                                        horizontal: 0,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.search,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
                                         ),
-                                        prefixIcon: Icon(Icons.search),
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4)),
-                                            borderSide: BorderSide(
-                                              color: Colors.grey,
-                                            ))),
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                    onChanged: (value) => widget.bloc.add(
+                                      CoursesListLoadEvent(
+                                        searchTxt: value,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -149,24 +191,71 @@ class _CoursesListContentState extends State<CoursesListContent> {
                   child: BlocBuilder<CoursesListBloc, CoursesListState>(
                     builder: (context, state) {
                       if (state is CoursesListLoadDoneState) {
-                        return ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: 20,
-                          itemBuilder: (context, index) => CourseItem(
-                            courseItem: state.coursesList.data!.rows[index],
-                          ),
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(
-                            height: 8.0,
-                          ),
-                        );
-                      } else if (state is CoursesListLoadingState) {
-                        return const Center(
-                          child: CupertinoActivityIndicator(),
+                        // return ListView.separated(
+                        //   physics: const BouncingScrollPhysics(),
+                        //   itemCount: 20,
+                        //   itemBuilder: (context, index) => CourseItem(
+                        //     courseItem: state.coursesList.data!.rows[index],
+                        //   ),
+                        //   separatorBuilder: (BuildContext context, int index) =>
+                        //       const SizedBox(
+                        //     height: 8.0,
+                        //   ),
+                        // );
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            await pullRefresh(
+                              state,
+                              _controller.text,
+                            );
+                          },
+                          child: (state.coursesList.data?.rows.isNotEmpty ??
+                                  false)
+                              ? SingleChildScrollView(
+                                  controller: _scrollController,
+                                  child: Column(
+                                    children: [
+                                      if (state.coursesList.data != null)
+                                        ...state.coursesList.data!.rows.map(
+                                          (e) => Container(
+                                            margin: const EdgeInsets.symmetric(
+                                              vertical: 4.0,
+                                            ),
+                                            child: CourseItem(
+                                              courseItem: e,
+                                            ),
+                                          ),
+                                        ),
+                                      SizedBox(
+                                        height: 40.0,
+                                        child: state.showLoading
+                                            ? const CupertinoActivityIndicator()
+                                            : null,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Center(
+                                  child: Text(
+                                    state.searchTxt != ''
+                                        ? 'Chưa tìm thấy kết quả bạn cần rồi.\nHãy thử lại nhé!'
+                                        : 'Không có dữ liệu',
+                                  ),
+                                ),
                         );
                       }
-                      return const Center(
-                        child: Text('Error while loading courses list...'),
+                      return Center(
+                        child: Column(
+                          children: const [
+                            Text(
+                              'Đang tải dữ liệu.\nVui lòng chờ...',
+                            ),
+                            SizedBox(
+                              height: 16.0,
+                            ),
+                            CupertinoActivityIndicator(),
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -176,4 +265,14 @@ class _CoursesListContentState extends State<CoursesListContent> {
           ),
         ),
       );
+
+  Future<void> pullRefresh(
+      CoursesListLoadDoneState state, String content) async {
+    widget.bloc.add(
+      CoursesListLoadEvent(
+        searchTxt: content,
+      ),
+    );
+    FocusScope.of(context).unfocus();
+  }
 }

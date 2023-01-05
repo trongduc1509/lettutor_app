@@ -19,11 +19,6 @@ class TeachersBloc extends Bloc<TeachersEvent, TeachersState> {
   TeachersBloc() : super(const TeachersInitState()) {
     on<TeacherLoadEvent>(_onLoadTeachers);
     on<TeacherFavUpdateEvent>(_onManageFavTutor);
-    add(
-      const TeacherLoadEvent(
-        searchTxt: '',
-      ),
-    );
   }
 
   final TeacherListUseCase _getTeachersList =
@@ -34,7 +29,7 @@ class TeachersBloc extends Bloc<TeachersEvent, TeachersState> {
       ManageFavTeacherUseCase(getIt.get<TeacherListRepository>());
 
   void _onLoadTeachers(TeacherLoadEvent event, emit) async {
-    emit(const TeachersLoadingState());
+    //emit(const TeachersLoadingState());
     final resultSearch =
         await _searchTeachersList(TeacherListSearchUseCaseParams(
       isVietnamese: event.isVietnamese,
@@ -46,6 +41,8 @@ class TeachersBloc extends Bloc<TeachersEvent, TeachersState> {
       (l) => emit(
         TeachersLoadErrorState(
           exception: l,
+          searchTxt: event.searchTxt,
+          isVietnamese: event.isVietnamese,
         ),
       ),
       (r) async {

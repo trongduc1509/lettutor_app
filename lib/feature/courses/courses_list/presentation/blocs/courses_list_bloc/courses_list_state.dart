@@ -16,20 +16,28 @@ class CoursesListLoadDoneState extends CoursesListState {
   const CoursesListLoadDoneState({
     required this.coursesList,
     this.searchTxt = '',
-    this.size = 100,
+    this.size = 10,
     this.page = 1,
+    this.showLoading = false,
   });
 
   final CoursesListResponseEntity coursesList;
   final String searchTxt;
   final int page;
   final int size;
+  final bool showLoading;
 }
 
 class CoursesListLoadErrorState extends CoursesListState {
   const CoursesListLoadErrorState({
     required this.exception,
+    this.searchTxt = '',
+    this.size = 10,
+    this.page = 1,
   });
 
   final AppException exception;
+  final String searchTxt;
+  final int page;
+  final int size;
 }

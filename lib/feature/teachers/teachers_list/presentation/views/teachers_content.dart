@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lettutor_app/feature/teachers/teachers_list/domain/entities/teacher_list_entity.dart';
-import 'package:lettutor_app/feature/teachers/teachers_list/presentation/widgets/teacher_item.dart';
 
 import '../../../../../base/theme/colors.dart';
 import '../../../../../base/util/notifier.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../blocs/teachers_bloc/teachers_bloc.dart';
+import '../widgets/teacher_item.dart';
 
 class TeachersContent extends StatefulWidget {
-  const TeachersContent({Key? key}) : super(key: key);
+  const TeachersContent({
+    Key? key,
+    required this.bloc,
+  }) : super(key: key);
+
+  final TeachersBloc bloc;
 
   @override
   State<TeachersContent> createState() => _TeachersContentState();
@@ -18,6 +22,35 @@ class TeachersContent extends StatefulWidget {
 
 class _TeachersContentState extends State<TeachersContent> {
   final TextEditingController _searchController = TextEditingController();
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(
+      () {
+        if (_scrollController.position.atEdge) {
+          var isTop = _scrollController.position.pixels == 0;
+          if (!isTop) {
+            var state = widget.bloc.state;
+            if (state is TeachersLoadDoneState) {
+              if (state.tutorsList.rows?.isNotEmpty ?? false) {
+                if (state.perPage <= (state.tutorsList.count ?? 0)) {
+                  widget.bloc.add(
+                    TeacherLoadEvent(
+                      searchTxt: state.searchTxt,
+                      perPage: state.perPage + 10,
+                      isVietnamese: state.isVietnamese,
+                    ),
+                  );
+                }
+              }
+            }
+          }
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) =>
@@ -244,42 +277,104 @@ class _TeachersContentState extends State<TeachersContent> {
                 // const SizedBox(
                 //   height: 5.0,
                 // ),
-                BlocBuilder<TeachersBloc, TeachersState>(
-                  builder: (context, state) {
-                    if (state is TeachersLoadDoneState) {
-                      return Expanded(
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: state.tutorsList.rows?.length ?? 0,
-                          itemBuilder: (context, index) => TeacherItem(
-                            tutor: state.tutorsList.rows?[index] ??
-                                const TutorItemEntity(),
-                            tutorReview: state.tutorsReviewsList.getTutorById(
-                                state.tutorsList.rows?[index].id ?? ''),
-                            isFav:
-                                state.tutorsList.rows?[index].isfavoritetutor ==
-                                    "1",
-                            searchTxt: state.searchTxt,
-                            perPage: state.perPage,
-                            isVietnamese: state.isVietnamese,
-                          ),
+                Expanded(
+                  child: BlocBuilder<TeachersBloc, TeachersState>(
+                    builder: (context, state) {
+                      if (state is TeachersLoadDoneState) {
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            await pullRefresh(
+                              state,
+                              _searchController.text,
+                            );
+                          },
+                          child: (state.tutorsList.rows?.isNotEmpty ?? false)
+                              ? SingleChildScrollView(
+                                  controller: _scrollController,
+                                  child: Column(
+                                    children: [
+                                      if (state.tutorsList.rows != null)
+                                        ...state.tutorsList.rows!.map((e) =>
+                                            TeacherItem(
+                                              tutor: e,
+                                              tutorReview: state
+                                                  .tutorsReviewsList
+                                                  .getTutorById(e.id ?? ''),
+                                              isFav: e.isfavoritetutor == "1",
+                                              searchTxt: state.searchTxt,
+                                              perPage: state.perPage,
+                                              isVietnamese: state.isVietnamese,
+                                            )),
+                                      // ListView.builder(
+                                      //   shrinkWrap: true,
+                                      //   physics:
+                                      //       const NeverScrollableScrollPhysics(),
+                                      //   itemCount:
+                                      //       state.tutorsList.rows?.length ?? 0,
+                                      //   itemBuilder: (context, index) =>
+                                      //       TeacherItem(
+                                      //     tutor:
+                                      //         state.tutorsList.rows?[index] ??
+                                      //             const TutorItemEntity(),
+                                      //     tutorReview: state.tutorsReviewsList
+                                      //         .getTutorById(state.tutorsList
+                                      //                 .rows?[index].id ??
+                                      //             ''),
+                                      //     isFav: state.tutorsList.rows?[index]
+                                      //             .isfavoritetutor ==
+                                      //         "1",
+                                      //     searchTxt: state.searchTxt,
+                                      //     perPage: state.perPage,
+                                      //     isVietnamese: state.isVietnamese,
+                                      //   ),
+                                      // ),
+                                      SizedBox(
+                                        height: 40.0,
+                                        child: state.showLoading
+                                            ? const CupertinoActivityIndicator()
+                                            : null,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Center(
+                                  child: Text(
+                                    state.searchTxt != ''
+                                        ? 'Chưa tìm thấy kết quả bạn cần rồi.\nHãy thử lại nhé!'
+                                        : 'Không có dữ liệu',
+                                  ),
+                                ),
+                        );
+                      }
+                      return Center(
+                        child: Column(
+                          children: const [
+                            Text(
+                              'Đang tải dữ liệu.\nVui lòng chờ...',
+                            ),
+                            SizedBox(
+                              height: 16.0,
+                            ),
+                            CupertinoActivityIndicator(),
+                          ],
                         ),
                       );
-                    } else if (state is TeachersLoadingState) {
-                      return const Center(
-                        child: CupertinoActivityIndicator(),
-                      );
-                    }
-                    return const Center(
-                      child: Text(
-                        'Error while loading tutors list...',
-                      ),
-                    );
-                  },
+                    },
+                  ),
                 )
               ],
             ),
           ),
         ),
       );
+
+  Future<void> pullRefresh(TeachersLoadDoneState state, String content) async {
+    widget.bloc.add(
+      TeacherLoadEvent(
+        searchTxt: content,
+        isVietnamese: state.isVietnamese,
+      ),
+    );
+    FocusScope.of(context).unfocus();
+  }
 }

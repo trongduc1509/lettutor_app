@@ -21,9 +21,7 @@ class CoursesListUseCase
         {
           'page': params.page,
           'size': params.size,
-        },
-        {
-          'studentRequest': params.studentRequest,
+          'q': params.studentRequest,
         },
       );
 }

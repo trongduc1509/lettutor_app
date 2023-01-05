@@ -1,6 +1,6 @@
-import '../../../../../base/extension/time.dart';
+import 'package:equatable/equatable.dart';
 
-class TeacherTotalEntity {
+class TeacherTotalEntity extends Equatable {
   final int? count;
   final List<TutorItemEntity>? rows;
 
@@ -8,9 +8,15 @@ class TeacherTotalEntity {
     this.count,
     this.rows = const [],
   });
+
+  @override
+  List<Object?> get props => [
+        count,
+        rows,
+      ];
 }
 
-class TutorItemEntity {
+class TutorItemEntity extends Equatable {
   final String? level;
   final String? email;
   // final dynamic google;
@@ -102,4 +108,52 @@ class TutorItemEntity {
     this.isfavoritetutor,
     this.price,
   });
+
+  @override
+  List<Object?> get props => [
+        level,
+        email,
+        // this.google,
+        // this.facebook,
+        // this.apple,
+        avatar,
+        name,
+        country,
+        phone,
+        language,
+        birthday,
+        requestPassword,
+        isActivated,
+        isPhoneActivated,
+        requireNote,
+        timezone,
+        phoneAuth,
+        isPhoneAuthActivated,
+        studySchedule,
+        canSendMessage,
+        isPublicRecord,
+        caredByStaffId,
+        createdAt,
+        updatedAt,
+        deletedAt,
+        studentGroupId,
+        id,
+        userId,
+        video,
+        bio,
+        education,
+        experience,
+        profession,
+        // this.accent,
+        targetStudent,
+        interests,
+        languages,
+        specialties,
+        // this.resume,
+        rating,
+        isNative,
+        schedulestimes,
+        isfavoritetutor,
+        price,
+      ];
 }

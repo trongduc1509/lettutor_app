@@ -7,8 +7,18 @@ class CoursesListPage extends StatelessWidget {
   const CoursesListPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => CoursesListBloc(),
-        child: const CoursesListContent(),
-      );
+  Widget build(BuildContext context) {
+    var coursesBloc = CoursesListBloc();
+    return BlocProvider(
+      create: (context) => coursesBloc
+        ..add(
+          const CoursesListLoadEvent(
+            searchTxt: '',
+          ),
+        ),
+      child: CoursesListContent(
+        bloc: coursesBloc,
+      ),
+    );
+  }
 }

@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../../../base/extension/time.dart';
 
-class TeacherTotalGetEntity {
+class TeacherTotalGetEntity extends Equatable {
   final TutorsListGetEntity? tutors;
   // final List<TutorFavEntity>? favoriteTutor;
 
@@ -29,9 +31,14 @@ class TeacherTotalGetEntity {
         ? tutors!.rows![indexFind]
         : const TutorItemGetEntity();
   }
+
+  @override
+  List<Object?> get props => [
+        tutors,
+      ];
 }
 
-class TutorsListGetEntity {
+class TutorsListGetEntity extends Equatable {
   final int? count;
   final List<TutorItemGetEntity>? rows;
 
@@ -39,9 +46,15 @@ class TutorsListGetEntity {
     this.count = 0,
     this.rows = const [],
   });
+
+  @override
+  List<Object?> get props => [
+        count,
+        rows,
+      ];
 }
 
-class TutorItemGetEntity {
+class TutorItemGetEntity extends Equatable {
   final String? level;
   final String? email;
   // final Null? google;
@@ -133,9 +146,57 @@ class TutorItemGetEntity {
     this.price = 0,
     this.isOnline = false,
   });
+
+  @override
+  List<Object?> get props => [
+        level,
+        email,
+        // this.google,
+        // this.facebook,
+        // this.apple,
+        avatar,
+        name,
+        country,
+        phone,
+        language,
+        birthday,
+        requestPassword,
+        isActivated,
+        isPhoneActivated,
+        requireNote,
+        timezone,
+        //this.phoneAuth,
+        isPhoneAuthActivated,
+        //this.studySchedule,
+        canSendMessage,
+        isPublicRecord,
+        //this.caredByStaffId,
+        createdAt,
+        updatedAt,
+        deletedAt,
+        studentGroupId,
+        feedbacks,
+        id,
+        userId,
+        video,
+        bio,
+        education,
+        experience,
+        profession,
+        //this.accent,
+        targetStudent,
+        interests,
+        languages,
+        specialties,
+        //this.resume,
+        rating,
+        isNative,
+        price,
+        isOnline,
+      ];
 }
 
-class TutorItemFeedbackEntity {
+class TutorItemFeedbackEntity extends Equatable {
   final String? id;
   final String? bookingId;
   final String? firstId;
@@ -160,9 +221,22 @@ class TutorItemFeedbackEntity {
 
   String getUpdatedAt({required bool containTime}) =>
       updatedAt?.convertDateByFormat(containTime: containTime) ?? '';
+
+  @override
+  List<Object?> get props => [
+        id,
+        bookingId,
+        firstId,
+        secondId,
+        rating,
+        content,
+        createdAt,
+        updatedAt,
+        firstInfo,
+      ];
 }
 
-class TutorItemFeedbackFirstInfoEntity {
+class TutorItemFeedbackFirstInfoEntity extends Equatable {
   final String? level;
   final String? email;
   // final Null? google;
@@ -218,6 +292,36 @@ class TutorItemFeedbackFirstInfoEntity {
     this.deletedAt,
     this.studentGroupId = '',
   });
+
+  @override
+  List<Object?> get props => [
+        level,
+        email,
+        // this.google,
+        // this.facebook,
+        // this.apple,
+        avatar,
+        name,
+        country,
+        phone,
+        language,
+        birthday,
+        requestPassword,
+        isActivated,
+        isPhoneActivated,
+        requireNote,
+        timezone,
+        //this.phoneAuth,
+        isPhoneAuthActivated,
+        studySchedule,
+        canSendMessage,
+        isPublicRecord,
+        //this.caredByStaffId,
+        createdAt,
+        updatedAt,
+        deletedAt,
+        studentGroupId,
+      ];
 }
 
 // class TutorFavEntity {

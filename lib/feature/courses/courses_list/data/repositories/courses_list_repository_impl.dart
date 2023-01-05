@@ -14,10 +14,9 @@ class CoursesListRepositoryImpl extends CoursesListRepository {
 
   @override
   Future<Either<AppException, CoursesListResponseEntity>> getCoursesList(
-      Map<String, dynamic> param, Map<String, dynamic> body) async {
+      Map<String, dynamic> param) async {
     try {
-      var result =
-          await _coursesListRemoteDatasource.getCoursesList(param, body);
+      var result = await _coursesListRemoteDatasource.getCoursesList(param);
       return Right(result);
     } on AppException catch (s) {
       return Left(s);

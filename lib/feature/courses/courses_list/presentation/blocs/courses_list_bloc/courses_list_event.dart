@@ -8,7 +8,7 @@ class CoursesListLoadEvent extends CoursesListEvent {
   const CoursesListLoadEvent({
     required this.searchTxt,
     this.page = 1,
-    this.size = 100,
+    this.size = 6,
   });
 
   final String searchTxt;
