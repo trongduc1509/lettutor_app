@@ -64,7 +64,10 @@ ScheduleModel _$ScheduleModelFromJson(Map<String, dynamic> json) =>
           ? null
           : ScheduleDetailInfoModel.fromJson(
               json['scheduleDetailInfo'] as Map<String, dynamic>),
-      classReview: json['classReview'] as String?,
+      classReview: json['classReview'] == null
+          ? null
+          : ClassReviewModel.fromJson(
+              json['classReview'] as Map<String, dynamic>),
       showRecordUrl: json['showRecordUrl'] as bool?,
       feedbacks: (json['feedbacks'] as List<dynamic>?)
               ?.map((e) => FeedbackModel.fromJson(e as Map<String, dynamic>))
@@ -220,7 +223,7 @@ FeedbackModel _$FeedbackModelFromJson(Map<String, dynamic> json) =>
       bookingId: json['bookingId'] as String?,
       firstId: json['firstId'] as String?,
       secondId: json['secondId'] as String?,
-      rating: json['rating'] as int?,
+      rating: (json['rating'] as num?)?.toDouble(),
       content: json['content'] as String?,
       createdAt: jsonToTime(json['createdAt'] as String?),
       updatedAt: jsonToTime(json['updatedAt'] as String?),
@@ -234,6 +237,69 @@ Map<String, dynamic> _$FeedbackModelToJson(FeedbackModel instance) =>
       'secondId': instance.secondId,
       'rating': instance.rating,
       'content': instance.content,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
+    };
+
+ClassReviewModel _$ClassReviewModelFromJson(Map<String, dynamic> json) =>
+    ClassReviewModel(
+      bookingId: json['bookingId'] as String?,
+      lessonStatusId: json['lessonStatusId'] as int?,
+      book: json['book'] as String?,
+      unit: json['unit'] as String?,
+      lesson: json['lesson'] as String?,
+      page: json['page'],
+      lessonProgress: json['lessonProgress'] as String?,
+      behaviorRating: json['behaviorRating'] as int?,
+      behaviorComment: json['behaviorComment'] as String?,
+      listeningRating: json['listeningRating'] as int?,
+      listeningComment: json['listeningComment'] as String?,
+      speakingRating: json['speakingRating'] as int?,
+      speakingComment: json['speakingComment'] as String?,
+      vocabularyRating: json['vocabularyRating'] as int?,
+      vocabularyComment: json['vocabularyComment'] as String?,
+      homeworkComment: json['homeworkComment'] as String?,
+      overallComment: json['overallComment'] as String?,
+      lessonStatus: json['lessonStatus'] == null
+          ? null
+          : LessonStatusModel.fromJson(
+              json['lessonStatus'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ClassReviewModelToJson(ClassReviewModel instance) =>
+    <String, dynamic>{
+      'bookingId': instance.bookingId,
+      'lessonStatusId': instance.lessonStatusId,
+      'book': instance.book,
+      'unit': instance.unit,
+      'lesson': instance.lesson,
+      'page': instance.page,
+      'lessonProgress': instance.lessonProgress,
+      'behaviorRating': instance.behaviorRating,
+      'behaviorComment': instance.behaviorComment,
+      'listeningRating': instance.listeningRating,
+      'listeningComment': instance.listeningComment,
+      'speakingRating': instance.speakingRating,
+      'speakingComment': instance.speakingComment,
+      'vocabularyRating': instance.vocabularyRating,
+      'vocabularyComment': instance.vocabularyComment,
+      'homeworkComment': instance.homeworkComment,
+      'overallComment': instance.overallComment,
+      'lessonStatus': instance.lessonStatus,
+    };
+
+LessonStatusModel _$LessonStatusModelFromJson(Map<String, dynamic> json) =>
+    LessonStatusModel(
+      id: json['id'] as int?,
+      status: json['status'] as String?,
+      createdAt: jsonToTime(json['createdAt'] as String?),
+      updatedAt: jsonToTime(json['updatedAt'] as String?),
+    );
+
+Map<String, dynamic> _$LessonStatusModelToJson(LessonStatusModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'status': instance.status,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
     };

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lettutor_app/base/extension/time.dart';
 
+import '../../../../../../../base/extension/time.dart';
 import '../../../../../domain/entities/schedule_entity.dart';
 
 part 'schedule_model.g.dart';
@@ -60,7 +60,7 @@ class ScheduleModel extends ScheduleEntity {
   final String? calendarId;
   final bool? isDeleted;
   final ScheduleDetailInfoModel? scheduleDetailInfo;
-  final String? classReview;
+  final ClassReviewModel? classReview;
   final bool? showRecordUrl;
   //final List<Null> studentMaterials;
   final List<FeedbackModel> feedbacks;
@@ -240,7 +240,7 @@ class FeedbackModel extends FeedbackEntity {
   final String? bookingId;
   final String? firstId;
   final String? secondId;
-  final int? rating;
+  final double? rating;
   final String? content;
   @JsonKey(fromJson: jsonToTime)
   final DateTime? createdAt;
@@ -262,4 +262,74 @@ class FeedbackModel extends FeedbackEntity {
       _$FeedbackModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedbackModelToJson(this);
+}
+
+@JsonSerializable()
+class ClassReviewModel extends ClassReviewEntity {
+  final String? bookingId;
+  final int? lessonStatusId;
+  final String? book;
+  final String? unit;
+  final String? lesson;
+  final dynamic page;
+  final String? lessonProgress;
+  final int? behaviorRating;
+  final String? behaviorComment;
+  final int? listeningRating;
+  final String? listeningComment;
+  final int? speakingRating;
+  final String? speakingComment;
+  final int? vocabularyRating;
+  final String? vocabularyComment;
+  final String? homeworkComment;
+  final String? overallComment;
+  final LessonStatusModel? lessonStatus;
+
+  const ClassReviewModel({
+    this.bookingId,
+    this.lessonStatusId,
+    this.book,
+    this.unit,
+    this.lesson,
+    this.page,
+    this.lessonProgress,
+    this.behaviorRating,
+    this.behaviorComment,
+    this.listeningRating,
+    this.listeningComment,
+    this.speakingRating,
+    this.speakingComment,
+    this.vocabularyRating,
+    this.vocabularyComment,
+    this.homeworkComment,
+    this.overallComment,
+    this.lessonStatus,
+  });
+
+  static ClassReviewModel fromJson(Map<String, dynamic> json) =>
+      _$ClassReviewModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ClassReviewModelToJson(this);
+}
+
+@JsonSerializable()
+class LessonStatusModel extends LessonStatusEntity {
+  final int? id;
+  final String? status;
+  @JsonKey(fromJson: jsonToTime)
+  final DateTime? createdAt;
+  @JsonKey(fromJson: jsonToTime)
+  final DateTime? updatedAt;
+
+  const LessonStatusModel({
+    this.id,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  static LessonStatusModel fromJson(Map<String, dynamic> json) =>
+      _$LessonStatusModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LessonStatusModelToJson(this);
 }

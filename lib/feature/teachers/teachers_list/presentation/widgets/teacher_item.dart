@@ -192,7 +192,17 @@ class TeacherItem extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Navigator.of(context)
+                        .push(NavigationService.createTutorDetailRoute(
+                      tutor: tutorReview,
+                    ));
+                    context.read<TeachersBloc>().add(TeacherLoadEvent(
+                          searchTxt: searchTxt,
+                          perPage: perPage,
+                          isVietnamese: isVietnamese,
+                        ));
+                  },
                   child: const Text('Book'),
                   style: TextButton.styleFrom(
                       side: const BorderSide(color: Colors.blue)),

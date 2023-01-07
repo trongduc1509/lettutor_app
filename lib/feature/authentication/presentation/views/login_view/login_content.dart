@@ -27,7 +27,14 @@ class _LoginContentState extends State<LoginContent> {
             await Navigator.of(context).pushReplacement(
               NavigationService.createHomeRoute(),
             );
-          } else if (state is LoginErrorState) {}
+          } else if (state is LoginErrorState) {
+            ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
+                .showSnackBar(
+              SnackBar(
+                content: Text(state.exception.displayMessage),
+              ),
+            );
+          }
         },
         child: Scaffold(
           appBar: AppBar(

@@ -9,6 +9,7 @@ import '../../../../../base/define/style/default_style.dart';
 import '../../../../../base/theme/colors.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
+import '../../../teacher_schedules/presentation/views/tutor_schedules_booking_page.dart';
 import '../../../teachers_list/domain/entities/teacher_list_get_entity.dart';
 import '../../../widgets/teacher_review_modal.dart';
 import '../../../widgets/teacher_tag.dart';
@@ -67,9 +68,8 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                 return SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 20.0,
+                    padding: const EdgeInsets.all(
+                      16.0,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,12 +217,24 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                                 // print(widget
                                 //     .dataReviewFromList?.feedbacks?.length);
                                 await showModalBottomSheet(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0),
+                                    ),
+                                  ),
+                                  isDismissible: false,
                                   context: context,
-                                  builder: (context) => TeacherReviewsModal(
-                                    feedbacks: widget.dataReviewFromList
-                                            ?.feedbacks?.reversed
-                                            .toList() ??
-                                        [],
+                                  isScrollControlled: true,
+                                  builder: (context) => SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: TeacherReviewsModal(
+                                      feedbacks: widget.dataReviewFromList
+                                              ?.feedbacks?.reversed
+                                              .toList() ??
+                                          [],
+                                    ),
                                   ),
                                 );
                               },
@@ -307,10 +319,8 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                           height: 5.0,
                         ),
                         if (state.data.user?.courses?.isNotEmpty ?? false) ...[
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: state.data.user!.courses!.length,
-                            itemBuilder: (context, index) => Padding(
+                          ...state.data.user!.courses!.map(
+                            (e) => Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 4.0,
                                 horizontal: 8.0,
@@ -318,14 +328,12 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).push(
                                   NavigationService.createCourseDetailRoute(
-                                    courseId:
-                                        state.data.user?.courses?[index].id ??
-                                            '',
+                                    courseId: e.id ?? '',
                                   ),
                                 ),
                                 behavior: HitTestBehavior.opaque,
                                 child: Text(
-                                  state.data.user!.courses![index].name ?? '',
+                                  e.name ?? '',
                                   style: DefaultStyle().t16Medium.copyWith(
                                         color: AppColor().blueLightTxt,
                                       ),
@@ -397,6 +405,53 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                         //   },
                         //   isTo: true,
                         // ),
+                        GestureDetector(
+                          onTap: () async {
+                            //   Navigator.of(context).push(
+                            //   NavigationService.createCourseDetailRoute(
+                            //     courseId:
+                            //         state.data.user?.courses?[index].id ??
+                            //             '',
+                            //   ),
+                            // );
+                            await showModalBottomSheet(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(20.0),
+                                ),
+                              ),
+                              isDismissible: false,
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                child: TutorSchedulesBookingPage(
+                                  tutorId: state.data.user?.id ?? '',
+                                ),
+                              ),
+                            );
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: Row(
+                            children: [
+                              Text(
+                                'Schedule & Booking Section',
+                                style: DefaultStyle().t20Medium.copyWith(
+                                      color: AppColor().blueLightTxt,
+                                    ),
+                              ),
+                              const SizedBox(
+                                width: 4.0,
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color: AppColor().blueLightTxt,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

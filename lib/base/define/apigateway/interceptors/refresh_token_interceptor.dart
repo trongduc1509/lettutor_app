@@ -9,6 +9,7 @@ import 'package:lettutor_app/feature/authentication/domain/repositories/authenti
 import 'package:lettutor_app/feature/authentication/domain/usecases/refresh_token_usecase/refresh_token_params.usecase.dart';
 
 import '../../../../feature/authentication/data/datasource/auth/remote_data/resource/refresh_token_resource.dart';
+import '../../../../shared/managers/app_manager.dart';
 import '../../../../shared/managers/events_manager.dart';
 
 // enum RefreshTokenState { idle, refreshing }
@@ -87,6 +88,7 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
         if (e is DioError &&
             (e.response!.statusCode == 401 || e.response!.statusCode == 400)) {
           EventsManager().sessionExpired.add(DateTime.now());
+          AppManager.shared.appState.add(AppState.authenticated);
         }
         return handler.next(err);
       }

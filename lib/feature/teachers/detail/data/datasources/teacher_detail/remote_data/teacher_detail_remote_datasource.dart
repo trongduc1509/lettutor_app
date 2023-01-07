@@ -8,14 +8,14 @@ import 'resource/teacher_detail_resource.dart';
 class TeacherDetailRemoteDatasource {
   TeacherDetailRemoteDatasource();
 
-  final ApiGateway apiGateway = ApiGateway(
+  final ApiGateway _apiGateway = ApiGateway(
     AppConfig.value.baseUrl,
     getIt.get<TokenLocalDatasource>(),
     apiType: ApiType.user,
   );
 
   Future<TeacherDetailBaseModel> getDetailTutor(String teacherId) async {
-    final response = await apiGateway.execute(
+    final response = await _apiGateway.execute(
       resource: TeacherDetailResource(teacherId),
       method: HTTPMethod.get,
     );

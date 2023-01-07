@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:lettutor_app/base/define/style/default_style.dart';
 
+import '../../../base/define/style/default_style.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../shared/widgets/custom_shimmer.dart';
 import '../teachers_list/domain/entities/teacher_list_get_entity.dart';

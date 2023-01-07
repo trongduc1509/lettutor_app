@@ -38,7 +38,7 @@ class ScheduleEntity {
   final String? calendarId;
   final bool? isDeleted;
   final ScheduleDetailInfoEntity? scheduleDetailInfo;
-  final String? classReview;
+  final ClassReviewEntity? classReview;
   final bool? showRecordUrl;
   //final List<Null> studentMaterials;
   final List<FeedbackEntity> feedbacks;
@@ -67,6 +67,62 @@ class ScheduleEntity {
     this.showRecordUrl,
     //this.studentMaterials,
     this.feedbacks = const [],
+  });
+}
+
+class ClassReviewEntity {
+  final String? bookingId;
+  final int? lessonStatusId;
+  final String? book;
+  final String? unit;
+  final String? lesson;
+  final dynamic page;
+  final String? lessonProgress;
+  final int? behaviorRating;
+  final String? behaviorComment;
+  final int? listeningRating;
+  final String? listeningComment;
+  final int? speakingRating;
+  final String? speakingComment;
+  final int? vocabularyRating;
+  final String? vocabularyComment;
+  final String? homeworkComment;
+  final String? overallComment;
+  final LessonStatusEntity? lessonStatus;
+
+  const ClassReviewEntity({
+    this.bookingId,
+    this.lessonStatusId,
+    this.book,
+    this.unit,
+    this.lesson,
+    this.page,
+    this.lessonProgress,
+    this.behaviorRating,
+    this.behaviorComment,
+    this.listeningRating,
+    this.listeningComment,
+    this.speakingRating,
+    this.speakingComment,
+    this.vocabularyRating,
+    this.vocabularyComment,
+    this.homeworkComment,
+    this.overallComment,
+    this.lessonStatus,
+  });
+}
+
+class LessonStatusEntity {
+  final int? id;
+  final String? status;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  const LessonStatusEntity({
+    this.id,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
   });
 }
 
@@ -187,7 +243,7 @@ class FeedbackEntity {
   final String? bookingId;
   final String? firstId;
   final String? secondId;
-  final int? rating;
+  final double? rating;
   final String? content;
   final DateTime? createdAt;
   final DateTime? updatedAt;

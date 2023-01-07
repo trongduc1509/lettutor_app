@@ -29,6 +29,12 @@ class _IntroVidPlayerState extends State<IntroVidPlayer> {
   }
 
   @override
+  void dispose() {
+    _vidController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => _vidController.value.isInitialized
       ? Stack(
           alignment: AlignmentDirectional.center,

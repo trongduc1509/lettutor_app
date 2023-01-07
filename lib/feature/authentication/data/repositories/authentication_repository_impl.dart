@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:lettutor_app/feature/authentication/domain/enities/forgot_pass_entity.dart';
-import 'package:lettutor_app/feature/authentication/domain/enities/login_entity.dart';
-import 'package:lettutor_app/feature/authentication/domain/usecases/forgot_password_usecase/forgot_password_params.usecase.dart';
-import 'package:lettutor_app/feature/authentication/domain/usecases/register_with_email_pass_usecase/register_email_pass_params.usecase.dart';
 
-import '../../../../di/di_module.dart';
-import '../../domain/enities/token_entity.dart';
-import '../../domain/usecases/refresh_token_usecase/refresh_token_params.usecase.dart';
-import '../datasource/auth/remote_data/auth_remote_datasource.dart';
-import '../../domain/usecases/login_with_password_usecase/login_with_password_params.usecase.dart';
 import '../../../../base/define/apigateway/exception/app_exception.dart';
+import '../../../../di/di_module.dart';
+import '../../domain/enities/forgot_pass_entity.dart';
+import '../../domain/enities/login_entity.dart';
+import '../../domain/enities/token_entity.dart';
 import '../../domain/repositories/authentication_repository.dart';
+import '../../domain/usecases/forgot_password_usecase/forgot_password_params.usecase.dart';
+import '../../domain/usecases/login_with_password_usecase/login_with_password_params.usecase.dart';
+import '../../domain/usecases/refresh_token_usecase/refresh_token_params.usecase.dart';
+import '../../domain/usecases/register_with_email_pass_usecase/register_email_pass_params.usecase.dart';
+import '../datasource/auth/remote_data/auth_remote_datasource.dart';
 import '../datasource/auth/remote_data/model/login.model.dart';
 import '../datasource/token/local_data/token_local_datasource.dart';
 
