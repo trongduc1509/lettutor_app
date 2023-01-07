@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lettutor_app/base/define/apigateway/exception/app_exception.dart';
-import 'package:lettutor_app/feature/schedule/domain/entities/schedule_entity.dart';
-import 'package:lettutor_app/feature/schedule/domain/usecases/get_booked_studied_schedule/get_booked_studied_schedule_usecase_params.dart';
-import 'package:lettutor_app/feature/schedule/domain/usecases/get_upcoming_schedule/get_upcoming_schedule_usecase.dart';
-import 'package:lettutor_app/feature/schedule/domain/usecases/get_upcoming_schedule/get_upcoming_schedule_usecase_params.dart';
 
+import '../../../../../base/define/apigateway/exception/app_exception.dart';
 import '../../../../../di/di_module.dart';
+import '../../../domain/entities/schedule_entity.dart';
 import '../../../domain/repositories/schedule_repository.dart';
 import '../../../domain/usecases/get_booked_studied_schedule/get_booked_studied_schedule_usecase.dart';
+import '../../../domain/usecases/get_booked_studied_schedule/get_booked_studied_schedule_usecase_params.dart';
+import '../../../domain/usecases/get_upcoming_schedule/get_upcoming_schedule_usecase.dart';
+import '../../../domain/usecases/get_upcoming_schedule/get_upcoming_schedule_usecase_params.dart';
 import 'schedule_event.dart';
 import 'schedule_state.dart';
 
@@ -28,25 +28,28 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
     Either<AppException, SchedulesResponseEntity> result;
     switch (event.loadType) {
       case 0: //UPCOMING
-        dataTimeLte = DateTime.now().millisecond;
+        dataTimeLte = DateTime.now().millisecondsSinceEpoch;
         result = await _upcomingUseCase(
             GetUpcomingScheduleUseCaseParams(dateTimeGte: dataTimeLte));
         break;
       case 1: //BOOKED
-        dataTimeLte =
-            DateTime.now().subtract(const Duration(minutes: 5)).millisecond;
+        dataTimeLte = DateTime.now()
+            .subtract(const Duration(minutes: 5))
+            .millisecondsSinceEpoch;
         result = await _bookedStudiedUseCase(
             GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
         break;
       case 2: //STUDIED
-        dataTimeLte =
-            DateTime.now().subtract(const Duration(minutes: 35)).millisecond;
+        dataTimeLte = DateTime.now()
+            .subtract(const Duration(minutes: 35))
+            .millisecondsSinceEpoch;
         result = await _bookedStudiedUseCase(
             GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
         break;
       default:
-        dataTimeLte =
-            DateTime.now().subtract(const Duration(minutes: 5)).millisecond;
+        dataTimeLte = DateTime.now()
+            .subtract(const Duration(minutes: 5))
+            .millisecondsSinceEpoch;
         result = await _bookedStudiedUseCase(
             GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
     }

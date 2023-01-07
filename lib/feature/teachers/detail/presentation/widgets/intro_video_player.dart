@@ -31,12 +31,27 @@ class _IntroVidPlayerState extends State<IntroVidPlayer> {
   @override
   Widget build(BuildContext context) => _vidController.value.isInitialized
       ? Stack(
-          alignment: AlignmentDirectional.bottomStart,
+          alignment: AlignmentDirectional.center,
           children: [
-            AspectRatio(
-              aspectRatio: _vidController.value.aspectRatio,
-              child: VideoPlayer(
-                _vidController,
+            Container(
+              height: 300,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
+                border: Border.all(
+                  color: Colors.blue,
+                ),
+              ),
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: AspectRatio(
+                    aspectRatio: _vidController.value.aspectRatio,
+                    child: VideoPlayer(
+                      _vidController,
+                    ),
+                  ),
+                ),
               ),
             ),
             IconButton(
@@ -55,10 +70,14 @@ class _IntroVidPlayerState extends State<IntroVidPlayer> {
           ],
         )
       : Container(
-          height: 200,
+          height: 300,
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppColor().greyBackground,
+            borderRadius: BorderRadius.circular(12.0),
+            border: Border.all(
+              color: Colors.blue,
+            ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
