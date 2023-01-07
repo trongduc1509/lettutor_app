@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:lettutor_app/feature/teachers/teachers_list/presentation/blocs/teachers_bloc/teachers_bloc.dart';
 
 import '../../../../../base/define/navigation/navigation.dart';
 import '../../../../../base/define/style/default_style.dart';
@@ -14,6 +13,7 @@ import '../../../teachers_list/domain/entities/teacher_list_get_entity.dart';
 import '../../../widgets/teacher_review_modal.dart';
 import '../../../widgets/teacher_tag.dart';
 import '../blocs/teacher_detail_bloc/teacher_detail_bloc.dart';
+import '../widgets/intro_video_player.dart';
 
 class TeacherDetailContent extends StatefulWidget {
   const TeacherDetailContent({
@@ -214,8 +214,8 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                print(widget
-                                    .dataReviewFromList?.feedbacks?.length);
+                                // print(widget
+                                //     .dataReviewFromList?.feedbacks?.length);
                                 await showModalBottomSheet(
                                   context: context,
                                   builder: (context) => TeacherReviewsModal(
@@ -251,19 +251,23 @@ class _TeacherDetailContentState extends State<TeacherDetailContent> {
                         const SizedBox(
                           height: 15.0,
                         ),
-                        Container(
-                          height: 200,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColor().greyBackground,
+                        if (state.data.video != null &&
+                            state.data.video!.isNotEmpty) ...[
+                          Text(
+                            'Introduction video',
+                            style: DefaultStyle().t20Medium,
                           ),
-                          child: const Center(
-                            child: Text('Introduction Video'),
+                          const SizedBox(
+                            height: 10.0,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 15.0,
-                        ),
+                          IntroVidPlayer(
+                            vidUrl: state.data.video!,
+                          ),
+                          const SizedBox(
+                            height: 15.0,
+                          ),
+                        ],
+
                         if (state.data.user != null &&
                             state.data.user!.language != null) ...[
                           Text(
