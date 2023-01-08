@@ -17,16 +17,22 @@ class ScheduleLoadDoneState extends ScheduleState {
   const ScheduleLoadDoneState({
     required this.scheduleRes,
     required this.loadType,
+    required this.perPage,
   });
 
   final SchedulesResponseEntity scheduleRes;
   final int loadType;
+  final int perPage;
 }
 
 class ScheduleLoadErrorState extends ScheduleState {
   const ScheduleLoadErrorState({
     required this.exception,
+    required this.loadType,
+    required this.perPage,
   });
 
   final AppException exception;
+  final int loadType;
+  final int perPage;
 }

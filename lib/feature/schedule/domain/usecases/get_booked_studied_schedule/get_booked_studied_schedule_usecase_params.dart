@@ -6,7 +6,7 @@ part 'get_booked_studied_schedule_usecase_params.g.dart';
 class GetBookedStudiedScheduleUseCaseParams {
   const GetBookedStudiedScheduleUseCaseParams({
     this.page = 1,
-    this.perPage = 20,
+    this.perPage = 6,
     this.orderBy = 'meeting',
     this.sortBy = 'desc',
     required this.dateTimeLte,

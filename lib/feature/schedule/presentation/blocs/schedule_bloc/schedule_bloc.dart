@@ -23,14 +23,18 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
       GetUpcomingScheduleUseCase(getIt.get<ScheduleRepository>());
 
   void _onLoad(ScheduleLoadEvent event, emit) async {
-    emit(const ScheduleLoadingState());
+    // emit(const ScheduleLoadingState());
     int dataTimeLte;
     Either<AppException, SchedulesResponseEntity> result;
     switch (event.loadType) {
       case 0: //UPCOMING
         dataTimeLte = DateTime.now().toUtc().millisecondsSinceEpoch;
         result = await _upcomingUseCase(
-            GetUpcomingScheduleUseCaseParams(dateTimeGte: dataTimeLte));
+          GetUpcomingScheduleUseCaseParams(
+            dateTimeGte: dataTimeLte,
+            perPage: event.perPage,
+          ),
+        );
         break;
       case 1: //BOOKED
         dataTimeLte = DateTime.now()
@@ -39,7 +43,11 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
             .millisecondsSinceEpoch;
         print(dataTimeLte);
         result = await _upcomingUseCase(
-            GetUpcomingScheduleUseCaseParams(dateTimeGte: dataTimeLte));
+          GetUpcomingScheduleUseCaseParams(
+            dateTimeGte: dataTimeLte,
+            perPage: event.perPage,
+          ),
+        );
         break;
       case 2: //STUDIED
         dataTimeLte = DateTime.now()
@@ -47,24 +55,37 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
             .toUtc()
             .millisecondsSinceEpoch;
         result = await _bookedStudiedUseCase(
-            GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
+          GetBookedStudiedScheduleUseCaseParams(
+            dateTimeLte: dataTimeLte,
+            perPage: event.perPage,
+          ),
+        );
         break;
       default:
         dataTimeLte = DateTime.now()
             .subtract(const Duration(minutes: 5))
             .millisecondsSinceEpoch;
         result = await _bookedStudiedUseCase(
-            GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
+          GetBookedStudiedScheduleUseCaseParams(
+            dateTimeLte: dataTimeLte,
+            perPage: event.perPage,
+          ),
+        );
     }
 
     result.fold(
       (l) => emit(
-        ScheduleLoadErrorState(exception: l),
+        ScheduleLoadErrorState(
+          exception: l,
+          loadType: event.loadType,
+          perPage: event.perPage,
+        ),
       ),
       (r) => emit(
         ScheduleLoadDoneState(
           scheduleRes: r,
           loadType: event.loadType,
+          perPage: event.perPage,
         ),
       ),
     );
