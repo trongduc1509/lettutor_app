@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor_app/base/extension/time.dart';
-import 'package:lettutor_app/base/theme/colors.dart';
-import 'package:lettutor_app/feature/schedule/domain/entities/schedule_entity.dart';
-import 'package:lettutor_app/shared/widgets/expansion_panel.dart';
+import '../../../../base/extension/time.dart';
+import '../../../../base/theme/colors.dart';
+import '../../domain/entities/schedule_entity.dart';
+import '../../../../shared/widgets/expansion_panel.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../shared/widgets/custom_shimmer.dart';
@@ -32,9 +32,9 @@ class ScheduleItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                item.scheduleDetailInfo?.scheduleInfo?.date!
-                        .convertDateByFormat(containTime: false) ??
-                    '',
+                DateTime.fromMillisecondsSinceEpoch(
+                        item.scheduleDetailInfo?.startPeriodTimestamp ?? 0)
+                    .convertDate('dd/MM/yyyy'),
                 style: TextStyle(
                   color: AppColor().blackTitle,
                   fontSize: 18.0,
@@ -145,7 +145,7 @@ class ScheduleItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Lesson Time: ${item.scheduleDetailInfo?.startPeriod ?? ''} - ${item.scheduleDetailInfo?.endPeriod ?? ''}',
+                      'Lesson Time: ${DateTime.fromMillisecondsSinceEpoch(item.scheduleDetailInfo?.startPeriodTimestamp ?? 0).convertDate('HH:mm')} - ${DateTime.fromMillisecondsSinceEpoch(item.scheduleDetailInfo?.endPeriodTimestamp ?? 0).convertDate('HH:mm')}',
                       style: TextStyle(
                         color: AppColor().blackTitle,
                         fontSize: 18.0,

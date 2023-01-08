@@ -28,20 +28,23 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
     Either<AppException, SchedulesResponseEntity> result;
     switch (event.loadType) {
       case 0: //UPCOMING
-        dataTimeLte = DateTime.now().millisecondsSinceEpoch;
+        dataTimeLte = DateTime.now().toUtc().millisecondsSinceEpoch;
         result = await _upcomingUseCase(
             GetUpcomingScheduleUseCaseParams(dateTimeGte: dataTimeLte));
         break;
       case 1: //BOOKED
         dataTimeLte = DateTime.now()
-            .subtract(const Duration(minutes: 5))
+            .subtract(const Duration(minutes: 30))
+            .toUtc()
             .millisecondsSinceEpoch;
-        result = await _bookedStudiedUseCase(
-            GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
+        print(dataTimeLte);
+        result = await _upcomingUseCase(
+            GetUpcomingScheduleUseCaseParams(dateTimeGte: dataTimeLte));
         break;
       case 2: //STUDIED
         dataTimeLte = DateTime.now()
             .subtract(const Duration(minutes: 35))
+            .toUtc()
             .millisecondsSinceEpoch;
         result = await _bookedStudiedUseCase(
             GetBookedStudiedScheduleUseCaseParams(dateTimeLte: dataTimeLte));
