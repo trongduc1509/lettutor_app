@@ -128,11 +128,6 @@ class ApiGateway {
     Function(int, int)? onReceivedProgress,
     Options? options,
   }) {
-    (_dioInstance.httpClientAdapter as DefaultHttpClientAdapter)
-        .onHttpClientCreate = (client) {
-      client.badCertificateCallback = (cert, host, port) => true;
-      return client;
-    };
     return _dioInstance.fetch(RequestOptions(
       method: method.mapToString,
       baseUrl: endpoint,
@@ -153,11 +148,6 @@ class ApiGateway {
     Function(int, int)? onReceivedProgress,
     Options? options,
   }) {
-    (_dioInstance.httpClientAdapter as DefaultHttpClientAdapter)
-        .onHttpClientCreate = (client) {
-      client.badCertificateCallback = (cert, host, port) => true;
-      return client;
-    };
     switch (method) {
       case HTTPMethod.get:
         return _dioInstance
