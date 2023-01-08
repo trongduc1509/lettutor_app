@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../base/define/apigateway/exception/app_exception.dart';
 import '../../../../../di/di_module.dart';
 import '../../../domain/entities/schedule_entity.dart';
+import '../../../domain/repositories/cancel_booking_repository.dart';
 import '../../../domain/repositories/schedule_repository.dart';
+import '../../../domain/usecases/cancel_booked_class/cancel_booked_class_usecase.dart';
+import '../../../domain/usecases/cancel_booked_class/cancel_booked_class_usecase_params.dart';
 import '../../../domain/usecases/get_booked_studied_schedule/get_booked_studied_schedule_usecase.dart';
 import '../../../domain/usecases/get_booked_studied_schedule/get_booked_studied_schedule_usecase_params.dart';
 import '../../../domain/usecases/get_upcoming_schedule/get_upcoming_schedule_usecase.dart';
@@ -15,12 +18,15 @@ import 'schedule_state.dart';
 class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
   ScheduleBloc() : super(const ScheduleInitState()) {
     on<ScheduleLoadEvent>(_onLoad);
+    on<ScheduleCancelEvent>(_onCancelClass);
   }
 
   final GetBookedStudiedScheduleUseCase _bookedStudiedUseCase =
       GetBookedStudiedScheduleUseCase(getIt.get<ScheduleRepository>());
   final GetUpcomingScheduleUseCase _upcomingUseCase =
       GetUpcomingScheduleUseCase(getIt.get<ScheduleRepository>());
+  final CancelBookingUseCase _cancelBookingUseCase = CancelBookingUseCase(
+      cancelBookingRepo: getIt.get<CancelBookingRepository>());
 
   void _onLoad(ScheduleLoadEvent event, emit) async {
     // emit(const ScheduleLoadingState());
@@ -41,7 +47,6 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
             .subtract(const Duration(minutes: 30))
             .toUtc()
             .millisecondsSinceEpoch;
-        print(dataTimeLte);
         result = await _upcomingUseCase(
           GetUpcomingScheduleUseCaseParams(
             dateTimeGte: dataTimeLte,
@@ -84,6 +89,30 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
       (r) => emit(
         ScheduleLoadDoneState(
           scheduleRes: r,
+          loadType: event.loadType,
+          perPage: event.perPage,
+        ),
+      ),
+    );
+  }
+
+  void _onCancelClass(ScheduleCancelEvent event, emit) async {
+    final result = await _cancelBookingUseCase(
+      CancelBookingUseCaseParams(
+        [event.scheduleId],
+      ),
+    );
+
+    result.fold(
+      (l) => emit(
+        ScheduleLoadErrorState(
+          exception: l,
+          loadType: event.loadType,
+          perPage: event.perPage,
+        ),
+      ),
+      (r) => add(
+        ScheduleLoadEvent(
           loadType: event.loadType,
           perPage: event.perPage,
         ),

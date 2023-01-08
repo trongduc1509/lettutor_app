@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../base/extension/time.dart';
 import '../../../../base/theme/colors.dart';
 import '../../domain/entities/schedule_entity.dart';
@@ -7,14 +8,18 @@ import '../../../../shared/widgets/expansion_panel.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../shared/widgets/custom_shimmer.dart';
+import '../blocs/schedule_bloc/schedule_bloc.dart';
+import '../blocs/schedule_bloc/schedule_event.dart';
 
 class ScheduleItem extends StatelessWidget {
   const ScheduleItem({
     Key? key,
     required this.item,
+    this.cancelMeet,
   }) : super(key: key);
 
   final ScheduleEntity item;
+  final VoidCallback? cancelMeet;
 
   @override
   Widget build(BuildContext context) {
@@ -197,12 +202,35 @@ class ScheduleItem extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Go to meeting'),
-                ),
+              Row(
+                mainAxisAlignment: DateTime.fromMillisecondsSinceEpoch(
+                                item.scheduleDetailInfo?.startPeriodTimestamp ??
+                                    0)
+                            .difference(DateTime.now())
+                            .inHours >
+                        2
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.end,
+                children: [
+                  if (DateTime.fromMillisecondsSinceEpoch(
+                              item.scheduleDetailInfo?.startPeriodTimestamp ??
+                                  0)
+                          .difference(DateTime.now())
+                          .inHours >
+                      2)
+                    ElevatedButton(
+                      onPressed: () {
+                        if (cancelMeet != null) {
+                          cancelMeet!.call();
+                        }
+                      },
+                      child: const Text('Cancel meeting'),
+                    ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Go to meeting'),
+                  ),
+                ],
               )
             ],
           ),

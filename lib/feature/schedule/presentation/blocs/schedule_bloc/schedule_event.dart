@@ -11,3 +11,15 @@ class ScheduleLoadEvent extends ScheduleEvent {
   final int loadType;
   final int perPage;
 }
+
+class ScheduleCancelEvent extends ScheduleEvent {
+  const ScheduleCancelEvent({
+    required this.scheduleId,
+    required this.loadType,
+    this.perPage = 6,
+  });
+
+  final String scheduleId;
+  final int loadType;
+  final int perPage;
+}

@@ -12,8 +12,11 @@ import '../../feature/profile/data/datasources/change_pass/remote_data/change_pa
 import '../../feature/profile/data/datasources/user_info/remote_data/user_info_remote_datasource.dart';
 import '../../feature/profile/data/repositories/profile_repository_impl.dart';
 import '../../feature/profile/domain/repositories/profile_repository.dart';
+import '../../feature/schedule/data/datasource/cancel_booking/remote_data/cancel_booking_remote_datasource.dart';
 import '../../feature/schedule/data/datasource/schedule/remote_data/schedule_remote_datasource.dart';
+import '../../feature/schedule/data/repositories/cancel_booking_repository_impl.dart';
 import '../../feature/schedule/data/repositories/schedule_repository_impl.dart';
+import '../../feature/schedule/domain/repositories/cancel_booking_repository.dart';
 import '../../feature/schedule/domain/repositories/schedule_repository.dart';
 import '../../feature/teachers/detail/data/datasources/teacher_detail/remote_data/teacher_detail_remote_datasource.dart';
 import '../../feature/teachers/detail/data/repositories/teacher_detail_repository_impl.dart';
@@ -60,6 +63,8 @@ class RepositoriesModule extends DIModule {
           () => SchedulesRemoteDatasource())
       ..registerLazySingleton<BookClassRemoteDatasource>(
           () => BookClassRemoteDatasource())
+      ..registerLazySingleton<CancelBookingRemoteDatasource>(
+          () => CancelBookingRemoteDatasource())
       ..registerLazySingleton<AuthenticationRepository>(
           () => AuthenticationRepositoryImpl())
       ..registerLazySingleton<UserRepository>(() => UserRepositoryImpl())
@@ -77,6 +82,8 @@ class RepositoriesModule extends DIModule {
       ..registerLazySingleton<TeacherSchedulesRepository>(
           () => TeacherSchedulesRepositoryImpl())
       ..registerLazySingleton<BookClassRepository>(
-          () => BookClassRepositoryImpl());
+          () => BookClassRepositoryImpl())
+      ..registerLazySingleton<CancelBookingRepository>(
+          () => CancelBookingRepositoryImpl());
   }
 }
