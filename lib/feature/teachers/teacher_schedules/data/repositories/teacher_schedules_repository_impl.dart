@@ -4,7 +4,7 @@ import '../../../../../di/di_module.dart';
 import '../../domain/entities/schedules_entity.dart';
 import '../../../../../base/define/apigateway/exception/app_exception.dart';
 import '../../domain/repositories/teacher_schedules_repository.dart';
-import '../datasource/remote/schedules_model/schedules_remote_datasource.dart';
+import '../datasource/remote/tutor_schedules/schedules_remote_datasource.dart';
 
 class TeacherSchedulesRepositoryImpl extends TeacherSchedulesRepository {
   TeacherSchedulesRepositoryImpl();

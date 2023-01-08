@@ -50,7 +50,7 @@ class ScheduleEntity extends Equatable {
 
   String getAvailableTimeId() =>
       (scheduleDetails ?? [])
-          .firstWhere((element) => element.isBooked == true)
+          .firstWhere((element) => element.isBooked == false)
           .id ??
       '';
 

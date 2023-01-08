@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:alice/alice.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 import '../../../feature/authentication/data/datasource/token/local_data/token_local_datasource.dart';
@@ -125,6 +128,11 @@ class ApiGateway {
     Function(int, int)? onReceivedProgress,
     Options? options,
   }) {
+    (_dioInstance.httpClientAdapter as DefaultHttpClientAdapter)
+        .onHttpClientCreate = (client) {
+      client.badCertificateCallback = (cert, host, port) => true;
+      return client;
+    };
     return _dioInstance.fetch(RequestOptions(
       method: method.mapToString,
       baseUrl: endpoint,
@@ -145,6 +153,11 @@ class ApiGateway {
     Function(int, int)? onReceivedProgress,
     Options? options,
   }) {
+    (_dioInstance.httpClientAdapter as DefaultHttpClientAdapter)
+        .onHttpClientCreate = (client) {
+      client.badCertificateCallback = (cert, host, port) => true;
+      return client;
+    };
     switch (method) {
       case HTTPMethod.get:
         return _dioInstance

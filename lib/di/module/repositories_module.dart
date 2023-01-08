@@ -18,8 +18,11 @@ import '../../feature/schedule/domain/repositories/schedule_repository.dart';
 import '../../feature/teachers/detail/data/datasources/teacher_detail/remote_data/teacher_detail_remote_datasource.dart';
 import '../../feature/teachers/detail/data/repositories/teacher_detail_repository_impl.dart';
 import '../../feature/teachers/detail/domain/repositories/teacher_detail_repository.dart';
-import '../../feature/teachers/teacher_schedules/data/datasource/remote/schedules_model/schedules_remote_datasource.dart';
+import '../../feature/teachers/teacher_schedules/data/datasource/remote/book_class/book_class_remote_datasource.dart';
+import '../../feature/teachers/teacher_schedules/data/datasource/remote/tutor_schedules/schedules_remote_datasource.dart';
+import '../../feature/teachers/teacher_schedules/data/repositories/book_class_repository_impl.dart';
 import '../../feature/teachers/teacher_schedules/data/repositories/teacher_schedules_repository_impl.dart';
+import '../../feature/teachers/teacher_schedules/domain/repositories/book_class_repository.dart';
 import '../../feature/teachers/teacher_schedules/domain/repositories/teacher_schedules_repository.dart';
 import '../../feature/teachers/teachers_list/data/datasources/teacher_list/remote_data/teacher_list_remote_datasource.dart';
 import '../../feature/teachers/teachers_list/data/repositories/teacher_list_repostitory_impl.dart';
@@ -55,6 +58,8 @@ class RepositoriesModule extends DIModule {
           () => ScheduleRemoteDatasource())
       ..registerLazySingleton<SchedulesRemoteDatasource>(
           () => SchedulesRemoteDatasource())
+      ..registerLazySingleton<BookClassRemoteDatasource>(
+          () => BookClassRemoteDatasource())
       ..registerLazySingleton<AuthenticationRepository>(
           () => AuthenticationRepositoryImpl())
       ..registerLazySingleton<UserRepository>(() => UserRepositoryImpl())
@@ -70,6 +75,8 @@ class RepositoriesModule extends DIModule {
       ..registerLazySingleton<ScheduleRepository>(
           () => ScheduleRepositoryImpl())
       ..registerLazySingleton<TeacherSchedulesRepository>(
-          () => TeacherSchedulesRepositoryImpl());
+          () => TeacherSchedulesRepositoryImpl())
+      ..registerLazySingleton<BookClassRepository>(
+          () => BookClassRepositoryImpl());
   }
 }

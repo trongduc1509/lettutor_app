@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../base/define/style/default_style.dart';
 import '../../../../../base/extension/time.dart';
 import '../../domain/entities/schedules_entity.dart';
+import '../blocs/tutor_schedule_booking_bloc.dart/tutor_schedule_booking_bloc.dart';
 
 class TutorScheduleItem extends StatelessWidget {
   const TutorScheduleItem({
@@ -22,14 +24,21 @@ class TutorScheduleItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${DateTime.fromMillisecondsSinceEpoch(scheduleEntity.startTimestamp ?? 0).convertDate('HH:mm')} - ${DateTime.fromMillisecondsSinceEpoch(scheduleEntity.startTimestamp ?? 0).convertDate('HH:mm')}',
+              '${DateTime.fromMillisecondsSinceEpoch(scheduleEntity.startTimestamp ?? 0).convertDate('HH:mm')} - ${DateTime.fromMillisecondsSinceEpoch(scheduleEntity.endTimestamp ?? 0).convertDate('HH:mm')}',
               style: DefaultStyle().t14Medium.copyWith(
                     color: Colors.white,
                   ),
             ),
             if (scheduleEntity.isBooked == false)
               GestureDetector(
-                onTap: () {},
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  context.read<TutorScheduleBookingBloc>().add(
+                        TutorScheduleBookEvent(
+                          scheduleDetailId: scheduleEntity.getAvailableTimeId(),
+                        ),
+                      );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -44,6 +53,7 @@ class TutorScheduleItem extends StatelessWidget {
                     ),
                     const Icon(
                       Icons.arrow_forward_ios,
+                      size: 14.0,
                       color: Colors.white,
                     )
                   ],
@@ -56,7 +66,7 @@ class TutorScheduleItem extends StatelessWidget {
           vertical: 4.0,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(8.0),
           color:
               scheduleEntity.isBooked == false ? Colors.blue : Colors.grey[600],
         ),

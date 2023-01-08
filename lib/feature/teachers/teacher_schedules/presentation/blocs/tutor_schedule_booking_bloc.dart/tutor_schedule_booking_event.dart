@@ -5,5 +5,9 @@ abstract class TutorScheduleBookingEvent {
 }
 
 class TutorScheduleBookEvent extends TutorScheduleBookingEvent {
-  const TutorScheduleBookEvent();
+  const TutorScheduleBookEvent({
+    required this.scheduleDetailId,
+  });
+
+  final String scheduleDetailId;
 }
