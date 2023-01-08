@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lettutor_app/feature/courses/detail/presentation/blocs/course_detail_bloc/course_detail_bloc.dart';
-import 'package:lettutor_app/feature/courses/detail/presentation/views/course_detail_content.dart';
+import '../blocs/course_detail_bloc/course_detail_bloc.dart';
+import 'course_detail_content.dart';
 
 class CourseDetailPage extends StatelessWidget {
   const CourseDetailPage({

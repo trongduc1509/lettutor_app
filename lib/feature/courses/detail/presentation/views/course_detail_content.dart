@@ -6,6 +6,7 @@ import 'package:lettutor_app/feature/courses/courses_list/presentation/blocs/cou
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../shared/widgets/custom_shimmer.dart';
 import '../blocs/course_detail_bloc/course_detail_bloc.dart';
+import '../widgets/simple_pdf_view.dart';
 
 class CourseDetailContent extends StatelessWidget {
   const CourseDetailContent({Key? key}) : super(key: key);
@@ -415,20 +416,33 @@ class CourseDetailContent extends StatelessWidget {
                         ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemBuilder: (context, index) => Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                              vertical: 10.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(
-                                color: Theme.of(context).dividerColor,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SimplePage(
+                                    fileUrl: state.data.data?.topics[index]
+                                            .nameFile ??
+                                        '',
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 10.0,
                               ),
-                              borderRadius: BorderRadius.circular(12.0),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                border: Border.all(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Text(
+                                  '${index + 1}. ${state.data.data?.topics[index].name ?? ''}'),
                             ),
-                            child: Text(
-                                '${index + 1}. ${state.data.data?.topics[index].name ?? ''}'),
                           ),
                           itemCount: state.data.data?.topics.length ?? 0,
                           separatorBuilder: (context, index) => const SizedBox(
