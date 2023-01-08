@@ -48,6 +48,12 @@ class ScheduleEntity extends Equatable {
   String getDate() => DateTime.fromMillisecondsSinceEpoch(startTimestamp ?? 0)
       .convertDate('dd/MM/yyyy');
 
+  String getAvailableTimeId() =>
+      (scheduleDetails ?? [])
+          .firstWhere((element) => element.isBooked == true)
+          .id ??
+      '';
+
   @override
   List<Object?> get props => [
         id,

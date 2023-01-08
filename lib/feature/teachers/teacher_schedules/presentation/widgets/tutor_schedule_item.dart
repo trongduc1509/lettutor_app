@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../base/define/style/default_style.dart';
+import '../../../../../base/extension/time.dart';
 import '../../domain/entities/schedules_entity.dart';
 
 class TutorScheduleItem extends StatelessWidget {
@@ -21,7 +22,7 @@ class TutorScheduleItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${scheduleEntity.startTime} - ${scheduleEntity.endTime}',
+              '${DateTime.fromMillisecondsSinceEpoch(scheduleEntity.startTimestamp ?? 0).convertDate('HH:mm')} - ${DateTime.fromMillisecondsSinceEpoch(scheduleEntity.startTimestamp ?? 0).convertDate('HH:mm')}',
               style: DefaultStyle().t14Medium.copyWith(
                     color: Colors.white,
                   ),
